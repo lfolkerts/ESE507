@@ -1,0 +1,148 @@
+#!/bin/csh
+
+@ COMP = 0
+@ BENC = 0
+@ SYNT = 0
+@ FIND = 0
+@ i = 1
+
+if ($#argv == 0) then
+	echo At least one argument is needed.
+	goto ARGERROR
+else
+	switch ($argv[$i])
+	case setdir:
+		vlib work
+		exit 0
+		breaksw
+	case compile:
+	case -c:
+		@ COMP = 1
+		breaksw
+	case bench:
+		@ BENC = 1
+		breaksw
+	case synth:
+		@ SYNT = 1
+		breaksw
+	case findmaxf:
+		@ FIND = 1
+		breaksw
+	default:
+		echo \'$argv[$i]\' is not a valid command.
+ARGERROR:
+		echo ----Command----
+		echo '\t'----setdir
+		echo '\t'----compile
+		echo '\t'----bench
+		echo '\t'----synth
+		echo '\t'----findmaxf
+		exit 1
+	endsw
+endif
+
+if ($COMP == 1) then
+	vlog +acc *.sv
+endif
+
+if ($BENC == 1) then
+	vsim testbench -c -do "run -all"
+endif
+
+if ($SYNT == 1) then
+	dc_shell -f runsynth.tcl
+endif
+
+if ($FIND == 1) then
+	set SYNTFILE = "runsynth_tmp.tcl"
+	set RSUTFILE = "output_tmp.txt"
+	set LISTFILE = "performance_list.txt"
+
+	set start_freq = "1.1"
+	set end_freq = "2"
+	set step_freq = "0.1"
+	set eps_freq = "0.01"
+	
+	set i = $start_freq
+	echo "Period\tCA\tNA\tTCA\tTDP\tCLP\tSP\tEP\tIs met?\tSlack" > $LISTFILE
+	while (`echo "$i<=$end_freq" | bc`)
+
+		echo "Write file "$SYNTFILE" at period = "$i
+		
+		cat runsynth.tcl | awk '{ \
+			if ($1 == "set" && $2 == "CLK_PERIOD") { \
+				print $1, $2, '$i' ";" \
+			} \
+			else { \
+				print $0 \
+			} \
+		}' > $SYNTFILE
+		
+		echo "Synthesize..."
+		dc_shell -f $SYNTFILE > $RSUTFILE
+		
+		echo "Collect data..."
+		echo -n $i"\t" >> $LISTFILE
+		cat $RSUTFILE | awk  '\
+		BEGIN { \
+			 OFS = "\t"; \
+		} \
+		{	if ($1 == "Combinational" && $2 == "area:") { \
+				CombArea = $3; \
+			} \
+			if ($1 == "Noncombinational" && $2 == "area:") { \
+				NoncArea = $3; \
+			} \
+			if ($1 == "Total" && $2 == "cell" && $3 == "area:") { \
+				TotlArea = $4; \
+			} \
+			if ($1 == "Total" && $2 == "Dynamic" && $3 == "Power") { \
+				DynaPowr = $5 $6; \
+			} \
+			if ($1 == "Cell" && $2 == "Leakage" && $3 == "Power") { \
+				LeakPowr = $5 $6; \
+			} \
+			if ($1 == "slack") { \
+				IsMet = $2; \
+				Slack = $3; \
+			} \
+			if ($1 == "Startpoint:") { \
+				StartPoint = $2; \
+			} \
+			if ($1 == "Endpoint:") { \
+				EndPoint = $2; \
+			} \
+		} \
+		END { \
+		print CombArea, NoncArea, TotlArea, DynaPowr, LeakPowr, StartPoint, EndPoint, Slack, IsMet \
+		}' >> $LISTFILE
+		set is_met = `cat $LISTFILE | awk '{ \
+			if ($1 == '$i') { \
+				print $10 \
+			} \
+		}'`
+		#echo $is_met
+		
+		if ($is_met == "(MET)") then
+			set reach_eps = `echo "$eps_freq >= $step_freq" | bc`
+			#echo $reach_eps
+			if ($reach_eps == "1") then
+				goto FINDMAXFEND
+			endif
+			set end_freq = $i
+			#echo end=$end_freq
+			set i = `echo "$i-$step_freq" | bc`
+			#echo i=$i
+			set step_freq = `echo "$step_freq * 0.100000" | bc`
+			#echo step=$step_freq
+			set i = `echo "$i+$step_freq" | bc`
+			#echo i=$i
+		else
+			set i = `echo "$i+$step_freq" | bc`
+		endif
+	end
+	
+FINDMAXFEND:
+	cp $RSUTFILE MaxFreqResult.txt
+	rm -f $RSUTFILE $SYNTFILE
+endif
