@@ -5,7 +5,7 @@ set CLK_NAME "clk";
 set CLK_PERIOD 1;
 set RST_NAME "reset";
 set TOP_MOD_NAME "mvm4_part3";
-set SRC_FILE "MatMult3.sv memory.sv";
+set SRC_FILE "MatMult3.sv";
 ###############################################
 
 source setupdc.tcl
