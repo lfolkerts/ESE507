@@ -1,12 +1,13 @@
 module testbench();
 	// Design parameters. Changing these values will affect the whole design.
 	parameter MAT_SCALE = 4, INPUT_WIDTH = 8, OUTPUT_WIDTH = 16;
+	parameter INTERREG = 1;
 	logic clk, reset, start;
 	logic done;
 	logic signed [INPUT_WIDTH - 1:0] data_in;
 	logic signed [OUTPUT_WIDTH - 1:0] data_out;
 	
-	mvm4_part3 #(MAT_SCALE, INPUT_WIDTH, OUTPUT_WIDTH) dut(clk, reset, start, done, data_in, data_out);
+	mvm4_part3 #(MAT_SCALE, INPUT_WIDTH, OUTPUT_WIDTH, INTERREG) dut(clk, reset, start, done, data_in, data_out);
 	
 	initial clk = 0;
 	always #5 clk  = ~clk;
