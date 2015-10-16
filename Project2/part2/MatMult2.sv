@@ -1,6 +1,6 @@
 module mvm4_part2(clk, reset, start, done, data_in, data_out);
 	// Parameters
-	parameter MAT_SCALE = 3, INPUT_WIDTH = 8, OUTPUT_WIDTH = 16;
+	parameter MAT_SCALE = 4, INPUT_WIDTH = 8, OUTPUT_WIDTH = 16;
 	parameter VEC_MEM_SIZE_LOG = $clog2(MAT_SCALE), MAT_MEM_SIZE_LOG = $clog2(MAT_SCALE * MAT_SCALE);
 	// Ports declaration
 	input clk, reset, start;
