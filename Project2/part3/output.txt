@@ -58,7 +58,7 @@ Presto compilation completed successfully.
 Elaborated 1 design.
 Current design is now 'mvm4_part3'.
 Information: Building the design 'data_path' instantiated from design 'mvm4_part3' with
-	the parameters "4,8,16,1,2". (HDL-193)
+	the parameters "4,8,16,1,12,14". (HDL-193)
 Warning:  ./MatMult3.sv:125: signed to unsigned conversion occurs. (VER-318)
 Warning:  ./MatMult3.sv:126: signed to unsigned conversion occurs. (VER-318)
 Warning:  ./MatMult3.sv:127: signed to unsigned conversion occurs. (VER-318)
@@ -69,7 +69,7 @@ Warning:  ./MatMult3.sv:145: signed to unsigned assignment occurs. (VER-318)
 Warning:  ./MatMult3.sv:151: unsigned to signed assignment occurs. (VER-318)
 
 Inferred memory devices in process
-	in routine data_path_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_DELAY2 line 139 in file
+	in routine data_path_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_MULT_STAGE12_DELAY14 line 139 in file
 		'./MatMult3.sv'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -101,26 +101,26 @@ Inferred memory devices in process
 |   delay_timer_reg   | Flip-flop |   4   |  Y  | N  | N  | N  | N  | N  | N  |
 ===============================================================================
 Statistics for MUX_OPs
-================================================================================================================
-|                           block name/line                             | Inputs | Outputs | # sel inputs | MB |
-================================================================================================================
-| data_path_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_DELAY2/151 |   4    |   16    |      2       | N  |
-================================================================================================================
+==============================================================================================================================
+|                                  block name/line                                    | Inputs | Outputs | # sel inputs | MB |
+==============================================================================================================================
+| data_path_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_MULT_STAGE12_DELAY14/151 |   4    |   16    |      2       | N  |
+==============================================================================================================================
 Presto compilation completed successfully.
 Information: Building the design 'control' instantiated from design 'mvm4_part3' with
-	the parameters "2". (HDL-193)
+	the parameters "14". (HDL-193)
 
-Statistics for case statements in always block at line 191 in file
+Statistics for case statements in always block at line 192 in file
 	'./MatMult3.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|           206            |     no/auto      |
-|           252            |     no/auto      |
+|           207            |     no/auto      |
+|           255            |     no/auto      |
 ===============================================
 
 Inferred memory devices in process
-	in routine control_DELAY2 line 191 in file
+	in routine control_DELAY14 line 192 in file
 		'./MatMult3.sv'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -137,13 +137,13 @@ Inferred memory devices in process
 |    clr_delay_reg    | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
 ===============================================================================
 Presto compilation completed successfully.
-Information: Building the design 'element_layer' instantiated from design 'data_path_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_DELAY2' with
-	the parameters "4,8,16,1". (HDL-193)
+Information: Building the design 'element_layer' instantiated from design 'data_path_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_MULT_STAGE12_DELAY14' with
+	the parameters "4,8,16,1,12". (HDL-193)
 Presto compilation completed successfully.
-Information: Building the design 'mult_layer' instantiated from design 'element_layer_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1' with
-	the parameters "8,16". (HDL-193)
+Information: Building the design 'mult_layer' instantiated from design 'element_layer_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_MULT_STAGE12' with
+	the parameters "8,16,12". (HDL-193)
 Presto compilation completed successfully.
-Information: Building the design 'recursive_add_layer' instantiated from design 'element_layer_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1' with
+Information: Building the design 'recursive_add_layer' instantiated from design 'element_layer_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_MULT_STAGE12' with
 	the parameters "4,16,1". (HDL-193)
 
 Inferred memory devices in process
@@ -155,6 +155,10 @@ Inferred memory devices in process
 |     add_in_reg      | Flip-flop |  64   |  Y  | N  | N  | N  | N  | N  | N  |
 ===============================================================================
 Presto compilation completed successfully.
+Error: Width mismatch on port 'tc' of reference to 'DW_mult_pipe' in 'refs'. (LINK-3)
+Information: Building the design 'DW_mult_pipe' instantiated from design 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12' with
+	the parameters "a_width=8,b_width=8,num_stages=12,stall_mode=0,rst_mode=0". (HDL-193)
+Warning: Cannot find the design 'DW_mult_pipe' in the library 'WORK'. (LBR-1)
 Information: Building the design 'add_layer' instantiated from design 'recursive_add_layer_INPUT_SCALE4_WIDTH16_INTERREG1' with
 	the parameters "16". (HDL-193)
 Presto compilation completed successfully.
@@ -170,6 +174,7 @@ Inferred memory devices in process
 |     add_in_reg      | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
 ===============================================================================
 Presto compilation completed successfully.
+Warning: Design 'mvm4_part3' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
 1
 ###### CLOCKS AND PORTS #######
 set CLK_PORT [get_ports $CLK_NAME]
@@ -179,6 +184,7 @@ set TMP1 [remove_from_collection [all_inputs] $CLK_PORT]
 set INPUTS [remove_from_collection $TMP1 $RST_NAME]
 {start data_in[7] data_in[6] data_in[5] data_in[4] data_in[3] data_in[2] data_in[1] data_in[0]}
 create_clock -period $CLK_PERIOD [get_ports clk]
+Warning: Design 'mvm4_part3' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
 1
 #set_input_delay 1 -max -clock clk $INPUTS
 #set_output_delay 1 -max -clock clk [all_outputs]
@@ -188,6 +194,7 @@ set_max_area 0
 1
 ###### RUN #####
 compile
+Warning: Design 'mvm4_part3' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
 Information: Checking out the license 'DesignWare'. (SEC-104)
 Information: Evaluating DesignWare library utilization. (UISN-27)
 
@@ -199,20 +206,27 @@ Information: Evaluating DesignWare library utilization. (UISN-27)
 ============================================================================
 
 
-Information: There are 7 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+Information: There are 199 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
 
 
 
   Beginning Pass 1 Mapping
   ------------------------
-  Processing 'control_DELAY2'
+  Processing 'control_DELAY14'
+Information: The register 'en_y_reg' is a constant and will be removed. (OPT-1206)
   Processing 'add_layer_WIDTH16_0'
   Processing 'recursive_add_layer_INPUT_SCALE2_WIDTH16_0'
   Processing 'recursive_add_layer_INPUT_SCALE4_WIDTH16_INTERREG1_0'
-  Processing 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_0'
-  Processing 'element_layer_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_0'
-  Processing 'data_path_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_DELAY2'
+  Processing 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_0'
+  Processing 'element_layer_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_MULT_STAGE12_0'
+  Processing 'data_path_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_MULT_STAGE12_DELAY14'
   Processing 'mvm4_part3'
+Error: Width mismatch on port 'tc' of reference to 'DW_mult_pipe' in 'refs'. (LINK-3)
+Information: Building the design 'DW_mult_pipe' instantiated from design 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_0' with
+	the parameters "a_width=8,b_width=8,num_stages=12,stall_mode=0,rst_mode=0". (HDL-193)
+Warning: Cannot find the design 'DW_mult_pipe' in the library 'WORK'. (LBR-1)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_0'. (LINK-5)
+Warning: Design 'mvm4_part3' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
 
   Updating timing information
 Information: Updating design information... (UID-85)
@@ -231,22 +245,6 @@ Information: Updating design information... (UID-85)
   Processing 'add_layer_WIDTH16_4_DW01_add_0'
   Processing 'add_layer_WIDTH16_11_DW01_add_0'
   Processing 'add_layer_WIDTH16_0_DW01_add_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_1_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_10_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_9_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_12_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_11_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_4_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_3_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_2_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_8_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_7_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_6_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_5_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_0_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_15_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_14_DW_mult_tc_0'
-  Mapping 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_13_DW_mult_tc_0'
 
   Beginning Mapping Optimizations  (Medium effort)
   -------------------------------
@@ -256,27 +254,25 @@ Information: Updating design information... (UID-85)
    ELAPSED            WORST NEG   SETUP    DESIGN                            
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
   --------- --------- --------- --------- --------- -------------------------
-    0:00:08   10936.6      0.18      12.3       0.0                          
-    0:00:08   10936.6      0.18      12.3       0.0                          
-    0:00:08   10936.6      0.18      12.3       0.0                          
-    0:00:08   10933.4      0.18      12.3       0.0                          
-    0:00:08   10933.4      0.18      12.3       0.0                          
-    0:00:09    8935.7      0.21       8.6       0.0                          
-    0:00:10    8932.3      0.18       7.9       0.0                          
-    0:00:10    8942.7      0.17       7.5       0.0                          
-    0:00:10    8947.7      0.17       7.3       0.0                          
-    0:00:10    8953.6      0.17       7.1       0.0                          
-    0:00:10    8963.9      0.16       7.1       0.0                          
-    0:00:10    8972.7      0.15       7.0       0.0                          
-    0:00:10    8978.8      0.15       6.8       0.0                          
-    0:00:11    8985.7      0.15       6.6       0.0                          
-    0:00:11    8994.0      0.15       6.4       0.0                          
-    0:00:11    9006.8      0.15       6.3       0.0                          
-    0:00:11    9006.8      0.15       6.3       0.0                          
-    0:00:11    9006.8      0.15       6.3       0.0                          
-    0:00:11    9006.8      0.15       6.3       0.0                          
-    0:00:11    9006.8      0.15       6.3       0.0                          
-    0:00:11    9006.8      0.15       6.3       0.0                          
+    0:00:02    5137.3      0.15       2.3       0.0                          
+    0:00:02    5137.3      0.15       2.3       0.0                          
+    0:00:02    5137.3      0.15       2.3       0.0                          
+    0:00:02    5136.2      0.15       2.3       0.0                          
+    0:00:02    5136.2      0.15       2.3       0.0                          
+    0:00:03    4140.8      0.15       1.6       0.0                          
+    0:00:03    4149.1      0.14       1.3       0.0                          
+    0:00:03    4158.1      0.13       1.1       0.0                          
+    0:00:03    4170.3      0.13       0.9       0.0                          
+    0:00:03    4181.8      0.11       0.6       0.0                          
+    0:00:03    4191.9      0.11       0.4       0.0                          
+    0:00:03    4202.5      0.11       0.3       0.0                          
+    0:00:03    4212.6      0.11       0.2       0.0                          
+    0:00:03    4219.8      0.09       0.1       0.0                          
+    0:00:03    4219.8      0.09       0.1       0.0                          
+    0:00:03    4219.8      0.09       0.1       0.0                          
+    0:00:03    4219.8      0.09       0.1       0.0                          
+    0:00:03    4219.8      0.09       0.1       0.0                          
+    0:00:03    4219.8      0.09       0.1       0.0                          
 
 
 
@@ -287,217 +283,23 @@ Information: Updating design information... (UID-85)
    ELAPSED            WORST NEG   SETUP    DESIGN                            
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
   --------- --------- --------- --------- --------- -------------------------
-    0:00:11    9006.8      0.15       6.3       0.0                          
-    0:00:11    9023.0      0.14       6.0       0.0 datapath/genblk1[1].element/add/add_in_reg[3][14]/D
-    0:00:11    9032.6      0.13       5.9       0.0 datapath/data_out_reg[15]/D
-    0:00:11    9042.7      0.13       5.8       0.0 datapath/genblk1[3].element/add/add_in_reg[0][14]/D
-    0:00:11    9056.2      0.13       5.7       0.0 datapath/genblk1[1].element/add/add_in_reg[1][14]/D
-    0:00:11    9076.7      0.13       5.6       0.0 datapath/genblk1[0].element/add/add_in_reg[2][14]/D
-    0:00:11    9085.5      0.13       5.5       0.0 datapath/genblk1[2].element/add/add_in_reg[2][14]/D
-    0:00:11    9095.9      0.12       5.4       0.0 datapath/genblk1[2].element/add/add_in_reg[3][14]/D
-    0:00:11    9100.1      0.12       5.4       0.0 datapath/genblk1[3].element/add/add_in_reg[1][14]/D
-    0:00:11    9118.2      0.12       5.3       0.0 datapath/genblk1[3].element/add/add_in_reg[1][14]/D
-    0:00:12    9130.2      0.12       5.1       0.0 datapath/genblk1[1].element/add/add_in_reg[2][14]/D
-    0:00:12    9142.2      0.12       5.0       0.0 datapath/genblk1[1].element/add/add_in_reg[1][14]/D
-    0:00:12    9153.9      0.12       4.8       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:12    9161.0      0.11       4.7       0.0 datapath/genblk1[2].element/add/add_in_reg[2][14]/D
-    0:00:12    9171.4      0.11       4.6       0.0 datapath/genblk1[1].element/add/add_in_reg[1][14]/D
-    0:00:12    9178.3      0.11       4.6       0.0 datapath/genblk1[1].element/add/add_in_reg[1][14]/D
-    0:00:12    9184.7      0.11       4.6       0.0 datapath/genblk1[0].element/add/add_in_reg[3][14]/D
-    0:00:12    9189.2      0.10       4.5       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:12    9195.4      0.10       4.5       0.0 datapath/data_out_reg[15]/D
-    0:00:12    9213.7      0.10       4.4       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:12    9219.8      0.10       4.3       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:12    9226.5      0.10       4.3       0.0 datapath/genblk1[1].element/add/genblk2.next_layer/add_in_reg[1][15]/D
-    0:00:12    9235.8      0.10       4.1       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:12    9247.0      0.09       4.0       0.0 datapath/genblk1[1].element/add/add_in_reg[0][14]/D
-    0:00:12    9255.7      0.09       3.9       0.0 datapath/genblk1[0].element/add/add_in_reg[1][15]/D
-    0:00:13    9262.9      0.09       3.8       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:13    9265.8      0.09       3.8       0.0 datapath/data_out_reg[15]/D
-    0:00:13    9272.0      0.09       3.8       0.0 datapath/genblk1[1].element/add/add_in_reg[3][14]/D
-    0:00:13    9281.5      0.09       3.7       0.0 datapath/genblk1[2].element/add/genblk2.next_layer/add_in_reg[0][15]/D
-    0:00:13    9287.4      0.09       3.6       0.0 datapath/genblk1[0].element/add/add_in_reg[3][14]/D
-    0:00:13    9288.7      0.09       3.6       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:13    9294.0      0.08       3.5       0.0 datapath/genblk1[3].element/add/add_in_reg[2][15]/D
-    0:00:13    9299.9      0.08       3.5       0.0 datapath/genblk1[0].element/add/add_in_reg[3][14]/D
-    0:00:13    9301.5      0.08       3.5       0.0 datapath/genblk1[1].element/add/genblk2.next_layer/add_in_reg[0][15]/D
-    0:00:13    9303.1      0.08       3.5       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:13    9310.0      0.08       3.4       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:13    9315.1      0.08       3.4       0.0 datapath/genblk1[3].element/add/add_in_reg[2][15]/D
-    0:00:13    9320.4      0.08       3.4       0.0 datapath/genblk1[1].element/add/add_in_reg[0][15]/D
-    0:00:13    9326.5      0.08       3.3       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:13    9332.9      0.07       3.2       0.0 datapath/data_out_reg[14]/D
-    0:00:13    9337.4      0.07       3.2       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:13    9343.5      0.07       3.2       0.0 datapath/genblk1[3].element/add/add_in_reg[0][14]/D
-    0:00:14    9353.6      0.07       3.1       0.0 datapath/genblk1[0].element/add/add_in_reg[1][15]/D
-    0:00:14    9356.8      0.07       3.1       0.0 datapath/genblk1[0].element/add/add_in_reg[3][14]/D
-    0:00:14    9362.7      0.07       3.0       0.0 datapath/genblk1[1].element/add/add_in_reg[2][15]/D
-    0:00:14    9367.2      0.07       3.0       0.0 datapath/data_out_reg[15]/D
-    0:00:14    9369.1      0.07       3.0       0.0 datapath/data_out_reg[15]/D
-    0:00:14    9377.0      0.07       2.9       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:14    9385.3      0.07       2.8       0.0 datapath/genblk1[2].element/add/add_in_reg[3][15]/D
-    0:00:14    9389.8      0.07       2.8       0.0 datapath/genblk1[2].element/add/add_in_reg[3][15]/D
-    0:00:14    9393.5      0.07       2.8       0.0 datapath/data_out_reg[15]/D
-    0:00:14    9399.1      0.07       2.8       0.0 datapath/genblk1[3].element/add/add_in_reg[2][15]/D
-    0:00:14    9409.7      0.07       2.7       0.0 datapath/genblk1[2].element/add/add_in_reg[1][15]/D
-    0:00:14    9412.1      0.07       2.7       0.0 datapath/genblk1[3].element/add/add_in_reg[1][15]/D
-    0:00:14    9421.5      0.06       2.7       0.0 datapath/data_out_reg[15]/D
-    0:00:14    9426.5      0.06       2.7       0.0 datapath/genblk1[0].element/add/add_in_reg[3][14]/D
-    0:00:14    9429.2      0.06       2.6       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:15    9431.8      0.06       2.6       0.0 datapath/genblk1[1].element/add/add_in_reg[0][15]/D
-    0:00:15    9436.6      0.06       2.6       0.0 datapath/genblk1[2].element/add/add_in_reg[1][15]/D
-    0:00:15    9443.0      0.06       2.6       0.0 datapath/data_out_reg[15]/D
-    0:00:15    9447.8      0.06       2.5       0.0 datapath/genblk1[3].element/add/genblk2.next_layer/add_in_reg[1][15]/D
-    0:00:15    9448.1      0.06       2.5       0.0 datapath/genblk1[1].element/add/add_in_reg[2][15]/D
-    0:00:15    9449.6      0.06       2.6       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:15    9453.1      0.06       2.5       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:15    9458.4      0.06       2.4       0.0 datapath/genblk1[1].element/add/genblk2.next_layer/add_in_reg[0][15]/D
-    0:00:15    9461.4      0.06       2.4       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:15    9464.0      0.06       2.4       0.0 datapath/genblk1[1].element/add/add_in_reg[2][15]/D
-    0:00:15    9466.9      0.06       2.3       0.0 datapath/data_out_reg[15]/D
-    0:00:15    9469.3      0.06       2.3       0.0 datapath/genblk1[1].element/add/add_in_reg[3][15]/D
-    0:00:15    9470.4      0.06       2.3       0.0 datapath/genblk1[3].element/add/add_in_reg[0][15]/D
-    0:00:15    9476.0      0.06       2.2       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:15    9478.6      0.06       2.2       0.0 datapath/genblk1[2].element/add/add_in_reg[3][15]/D
-    0:00:15    9480.8      0.06       2.2       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:16    9484.0      0.05       2.1       0.0 datapath/genblk1[0].element/add/add_in_reg[1][15]/D
-    0:00:16    9484.5      0.05       2.1       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:16    9487.2      0.05       2.1       0.0 datapath/genblk1[0].element/add/add_in_reg[3][14]/D
-    0:00:16    9489.0      0.05       2.0       0.0 datapath/genblk1[3].element/add/add_in_reg[1][14]/D
-    0:00:16    9495.4      0.05       2.0       0.0 datapath/genblk1[2].element/add/add_in_reg[1][15]/D
-    0:00:16    9497.5      0.05       2.0       0.0 datapath/genblk1[0].element/add/add_in_reg[3][14]/D
-    0:00:16    9499.1      0.05       2.0       0.0 datapath/genblk1[2].element/add/add_in_reg[0][14]/D
-    0:00:16    9505.5      0.05       1.9       0.0 datapath/genblk1[1].element/add/add_in_reg[3][15]/D
-    0:00:16    9507.6      0.05       1.9       0.0 datapath/genblk1[3].element/add/add_in_reg[0][15]/D
-    0:00:16    9514.6      0.05       1.9       0.0 datapath/genblk1[0].element/add/add_in_reg[2][15]/D
-    0:00:16    9515.1      0.05       1.9       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:16    9518.5      0.05       1.9       0.0 datapath/genblk1[3].element/add/add_in_reg[1][15]/D
-    0:00:16    9520.9      0.05       1.9       0.0 datapath/genblk1[1].element/add/add_in_reg[1][15]/D
-    0:00:16    9523.1      0.05       1.9       0.0 datapath/genblk1[1].element/add/add_in_reg[3][15]/D
-    0:00:16    9525.5      0.05       1.9       0.0 datapath/genblk1[2].element/add/add_in_reg[3][15]/D
-    0:00:16    9527.1      0.05       1.9       0.0 datapath/genblk1[3].element/add/add_in_reg[3][15]/D
-    0:00:16    9527.6      0.05       1.9       0.0 datapath/genblk1[2].element/add/add_in_reg[3][15]/D
-    0:00:17    9529.2      0.05       1.8       0.0 datapath/genblk1[0].element/add/add_in_reg[1][15]/D
-    0:00:17    9534.8      0.05       1.8       0.0 datapath/genblk1[0].element/add/add_in_reg[1][15]/D
-    0:00:17    9537.2      0.05       1.8       0.0 datapath/genblk1[0].element/add/add_in_reg[1][15]/D
-    0:00:17    9536.6      0.05       1.8       0.0 datapath/genblk1[2].element/add/add_in_reg[0][14]/D
-    0:00:17    9540.6      0.05       1.8       0.0 datapath/data_out_reg[15]/D
-    0:00:17    9542.0      0.05       1.7       0.0 datapath/genblk1[0].element/add/add_in_reg[3][14]/D
-    0:00:17    9545.7      0.05       1.7       0.0 datapath/genblk1[1].element/add/add_in_reg[0][15]/D
-    0:00:17    9551.8      0.04       1.7       0.0 datapath/genblk1[2].element/add/add_in_reg[1][15]/D
-    0:00:17    9556.3      0.04       1.7       0.0 datapath/genblk1[1].element/add/add_in_reg[0][15]/D
-    0:00:17    9561.6      0.04       1.6       0.0 datapath/genblk1[1].element/add/add_in_reg[0][15]/D
-    0:00:17    9565.9      0.04       1.6       0.0 datapath/genblk1[1].element/add/add_in_reg[3][15]/D
-    0:00:17    9568.3      0.04       1.6       0.0 datapath/genblk1[1].element/add/add_in_reg[2][15]/D
-    0:00:17    9569.6      0.04       1.6       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:17    9572.8      0.04       1.6       0.0 datapath/genblk1[0].element/add/add_in_reg[2][15]/D
-    0:00:17    9576.0      0.04       1.6       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:17    9581.9      0.04       1.6       0.0 datapath/data_out_reg[15]/D
-    0:00:18    9584.8      0.04       1.6       0.0 datapath/genblk1[0].element/add/add_in_reg[1][15]/D
-    0:00:18    9584.2      0.04       1.5       0.0 datapath/genblk1[0].element/add/genblk2.next_layer/add_in_reg[0][15]/D
-    0:00:18    9586.9      0.04       1.4       0.0 datapath/genblk1[0].element/add/add_in_reg[1][15]/D
-    0:00:18    9591.2      0.04       1.4       0.0 datapath/genblk1[1].element/add/add_in_reg[1][15]/D
-    0:00:18    9593.6      0.04       1.4       0.0 datapath/data_out_reg[15]/D
-    0:00:18    9597.5      0.04       1.4       0.0 datapath/genblk1[1].element/add/add_in_reg[0][15]/D
-    0:00:18    9602.1      0.04       1.3       0.0 datapath/genblk1[2].element/add/add_in_reg[1][15]/D
-    0:00:18    9605.3      0.04       1.3       0.0 datapath/data_out_reg[15]/D
-    0:00:18    9605.0      0.04       1.3       0.0 datapath/genblk1[3].element/add/add_in_reg[3][14]/D
-    0:00:18    9609.0      0.04       1.3       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:18    9615.6      0.03       1.2       0.0 datapath/genblk1[1].element/add/add_in_reg[3][15]/D
-    0:00:18    9622.0      0.03       1.2       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:18    9630.8      0.03       1.1       0.0 datapath/genblk1[1].element/add/add_in_reg[3][15]/D
-    0:00:18    9637.4      0.03       1.1       0.0 datapath/genblk1[3].element/add/add_in_reg[3][14]/D
-    0:00:18    9641.7      0.03       1.1       0.0 datapath/genblk1[3].element/add/add_in_reg[1][15]/D
-    0:00:18    9642.2      0.03       1.0       0.0 datapath/data_out_reg[15]/D
-    0:00:18    9648.6      0.03       1.0       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:18    9655.3      0.03       1.0       0.0 datapath/data_out_reg[15]/D
-    0:00:18    9664.8      0.03       0.9       0.0 datapath/genblk1[1].element/add/add_in_reg[1][15]/D
-    0:00:19    9670.4      0.03       0.9       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:19    9675.0      0.03       0.9       0.0 datapath/genblk1[3].element/add/add_in_reg[3][14]/D
-    0:00:19    9678.4      0.03       0.9       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:19    9680.8      0.03       0.8       0.0 datapath/genblk1[1].element/add/add_in_reg[2][15]/D
-    0:00:19    9683.7      0.02       0.8       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:19    9689.0      0.02       0.8       0.0 datapath/genblk1[3].element/add/add_in_reg[3][14]/D
-    0:00:19    9694.6      0.02       0.8       0.0 datapath/genblk1[1].element/add/add_in_reg[1][15]/D
-    0:00:19    9697.0      0.02       0.7       0.0 datapath/genblk1[0].element/add/add_in_reg[2][15]/D
-    0:00:19    9700.8      0.02       0.7       0.0 datapath/genblk1[2].element/add/add_in_reg[1][15]/D
-    0:00:19    9703.9      0.02       0.7       0.0 datapath/data_out_reg[15]/D
-    0:00:20    9704.5      0.02       0.6       0.0 datapath/data_out_reg[15]/D
-    0:00:20    9706.6      0.02       0.6       0.0                          
-    0:00:20    9701.3      0.02       0.6       0.0                          
-    0:00:20    9701.3      0.02       0.6       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:20    9704.5      0.02       0.6       0.0 datapath/genblk1[1].element/add/add_in_reg[3][15]/D
-    0:00:20    9711.4      0.02       0.5       0.0 datapath/genblk1[2].element/add/add_in_reg[0][15]/D
-    0:00:20    9714.1      0.02       0.5       0.0 datapath/genblk1[1].element/add/add_in_reg[3][15]/D
-    0:00:20    9717.2      0.02       0.5       0.0 datapath/genblk1[1].element/add/genblk2.next_layer/add_in_reg[1][15]/D
-    0:00:21    9719.9      0.02       0.5       0.0 datapath/genblk1[2].element/add/add_in_reg[1][15]/D
-    0:00:21    9721.2      0.02       0.5       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:21    9724.7      0.02       0.5       0.0 datapath/data_out_reg[15]/D
-    0:00:21    9731.1      0.02       0.5       0.0 datapath/genblk1[3].element/add/add_in_reg[0][15]/D
-    0:00:21    9733.5      0.02       0.5       0.0 datapath/genblk1[1].element/add/add_in_reg[0][15]/D
-    0:00:21    9735.1      0.02       0.5       0.0 datapath/genblk1[1].element/add/add_in_reg[0][15]/D
-    0:00:21    9738.5      0.02       0.4       0.0 datapath/genblk1[0].element/add/add_in_reg[2][15]/D
-    0:00:21    9739.9      0.02       0.4       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:21    9742.2      0.02       0.4       0.0 datapath/genblk1[1].element/add/genblk2.next_layer/add_in_reg[0][15]/D
-    0:00:21    9742.5      0.01       0.4       0.0 datapath/genblk1[0].element/add/add_in_reg[2][15]/D
-    0:00:21    9743.3      0.01       0.4       0.0 datapath/data_out_reg[15]/D
-    0:00:21    9747.0      0.01       0.4       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:21    9750.5      0.01       0.4       0.0 datapath/genblk1[2].element/add/add_in_reg[3][15]/D
-    0:00:21    9750.0      0.01       0.4       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:21    9748.1      0.01       0.4       0.0 datapath/genblk1[0].element/add/add_in_reg[1][14]/D
-    0:00:21    9748.9      0.01       0.3       0.0 datapath/genblk1[1].element/add/add_in_reg[1][15]/D
-    0:00:22    9752.4      0.01       0.3       0.0 datapath/genblk1[2].element/add/add_in_reg[1][15]/D
-    0:00:22    9753.7      0.01       0.3       0.0 datapath/genblk1[0].element/add/add_in_reg[1][15]/D
-    0:00:22    9755.5      0.01       0.3       0.0 datapath/genblk1[0].element/add/genblk2.next_layer/add_in_reg[0][15]/D
-    0:00:22    9756.9      0.01       0.3       0.0 datapath/genblk1[1].element/add/add_in_reg[3][15]/D
-    0:00:22    9759.5      0.01       0.3       0.0 datapath/genblk1[0].element/add/add_in_reg[3][15]/D
-    0:00:22    9760.3      0.01       0.3       0.0 datapath/genblk1[1].element/add/add_in_reg[2][15]/D
-    0:00:22    9760.3      0.01       0.3       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:22    9762.7      0.01       0.3       0.0 datapath/genblk1[3].element/add/add_in_reg[2][15]/D
-    0:00:22    9764.3      0.01       0.3       0.0 datapath/genblk1[2].element/add/add_in_reg[3][15]/D
-    0:00:22    9763.5      0.01       0.3       0.0 datapath/genblk1[1].element/add/genblk2.next_layer/add_in_reg[1][15]/D
-    0:00:22    9768.6      0.01       0.2       0.0 datapath/genblk1[3].element/add/add_in_reg[1][15]/D
-    0:00:22    9770.4      0.01       0.2       0.0 datapath/genblk1[1].element/add/add_in_reg[2][15]/D
-    0:00:22    9775.0      0.01       0.2       0.0 datapath/genblk1[1].element/add/add_in_reg[1][15]/D
-    0:00:22    9776.8      0.01       0.2       0.0 datapath/genblk1[0].element/add/add_in_reg[2][15]/D
-    0:00:22    9779.2      0.01       0.2       0.0 datapath/genblk1[0].element/add/add_in_reg[1][15]/D
-    0:00:22    9780.8      0.01       0.2       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:22    9782.7      0.01       0.2       0.0 datapath/genblk1[2].element/add/genblk2.next_layer/add_in_reg[0][15]/D
-    0:00:23    9782.7      0.01       0.2       0.0 datapath/data_out_reg[15]/D
-    0:00:23    9782.9      0.01       0.2       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:23    9784.8      0.01       0.2       0.0 datapath/genblk1[1].element/add/add_in_reg[2][15]/D
-    0:00:23    9786.4      0.01       0.1       0.0 datapath/genblk1[1].element/add/add_in_reg[3][15]/D
-    0:00:23    9788.3      0.01       0.1       0.0 datapath/genblk1[3].element/add/add_in_reg[3][15]/D
-    0:00:23    9789.3      0.01       0.1       0.0 datapath/genblk1[1].element/add/add_in_reg[1][15]/D
-    0:00:23    9792.0      0.01       0.1       0.0 datapath/genblk1[0].element/add/add_in_reg[3][15]/D
-    0:00:23    9796.5      0.01       0.1       0.0 datapath/data_out_reg[15]/D
-    0:00:23    9798.9      0.01       0.1       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:23    9799.4      0.01       0.1       0.0 datapath/genblk1[1].element/add/add_in_reg[1][15]/D
-    0:00:23    9799.2      0.01       0.1       0.0 datapath/genblk1[1].element/add/add_in_reg[3][15]/D
-    0:00:23    9803.7      0.01       0.1       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:23    9804.2      0.01       0.1       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:23    9806.9      0.01       0.1       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:24    9807.2      0.01       0.1       0.0 datapath/genblk1[3].element/add/add_in_reg[0][15]/D
-    0:00:24    9807.7      0.00       0.1       0.0 datapath/genblk1[3].element/add/add_in_reg[1][15]/D
-    0:00:24    9809.3      0.00       0.1       0.0 datapath/genblk1[0].element/add/add_in_reg[0][14]/D
-    0:00:24    9808.2      0.00       0.1       0.0 datapath/genblk1[1].element/add/add_in_reg[0][15]/D
-    0:00:24    9809.3      0.00       0.1       0.0 datapath/genblk1[1].element/add/add_in_reg[3][14]/D
-    0:00:24    9810.1      0.00       0.1       0.0 datapath/genblk1[0].element/add/add_in_reg[2][15]/D
-    0:00:24    9809.0      0.00       0.0       0.0 datapath/genblk1[0].element/add/genblk2.next_layer/add_in_reg[0][15]/D
-    0:00:24    9809.3      0.00       0.0       0.0 datapath/data_out_reg[15]/D
-    0:00:24    9812.7      0.00       0.0       0.0 datapath/genblk1[2].element/add/add_in_reg[1][15]/D
-    0:00:24    9813.8      0.00       0.0       0.0 datapath/genblk1[0].element/add/add_in_reg[1][14]/D
-    0:00:24    9816.5      0.00       0.0       0.0 datapath/genblk1[3].element/add/add_in_reg[1][15]/D
-    0:00:24    9818.6      0.00       0.0       0.0 datapath/genblk1[1].element/add/add_in_reg[0][15]/D
-    0:00:24    9820.5      0.00       0.0       0.0 datapath/genblk1[0].element/add/genblk2.next_layer/add_in_reg[0][15]/D
-    0:00:24    9820.5      0.00       0.0       0.0 datapath/data_out_reg[15]/D
-    0:00:24    9823.6      0.00       0.0       0.0 datapath/genblk1[2].element/add/add_in_reg[3][15]/D
-    0:00:24    9825.5      0.00       0.0       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:25    9827.1      0.00       0.0       0.0 datapath/genblk1[3].element/add/add_in_reg[1][15]/D
-    0:00:25    9830.0      0.00       0.0       0.0 datapath/genblk1[2].element/add/add_in_reg[2][15]/D
-    0:00:25    9832.7      0.00       0.0       0.0 datapath/genblk1[1].element/add/add_in_reg[2][15]/D
-    0:00:25    9828.4      0.00       0.0       0.0 datapath/genblk1[1].element/add/add_in_reg[0][15]/D
-    0:00:25    9829.8      0.00       0.0       0.0                          
+    0:00:03    4219.8      0.09       0.1       0.0                          
+    0:00:03    4228.6      0.07       0.1       0.0 datapath/data_out_reg[15]/D
+    0:00:03    4235.0      0.06       0.1       0.0 datapath/data_out_reg[15]/D
+    0:00:03    4237.4      0.05       0.1       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4245.1      0.03       0.0       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4250.7      0.03       0.0       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4256.8      0.02       0.0       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4257.3      0.02       0.0       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4259.2      0.01       0.0       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4264.0      0.01       0.0       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4268.2      0.01       0.0       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4268.5      0.01       0.0       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4268.8      0.00       0.0       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4270.9      0.00       0.0       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4272.5      0.00       0.0       0.0 datapath/data_out_reg[15]/D
+    0:00:04    4272.5      0.00       0.0       0.0                          
+    0:00:04    4267.7      0.00       0.0       0.0                          
 
 
   Beginning Area-Recovery Phase  (max_area 0)
@@ -507,36 +309,29 @@ Information: Updating design information... (UID-85)
    ELAPSED            WORST NEG   SETUP    DESIGN                            
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
   --------- --------- --------- --------- --------- -------------------------
-    0:00:25    9829.8      0.00       0.0       0.0                          
-    0:00:25    9829.8      0.00       0.0       0.0                          
-    0:00:25    9724.4      0.01       0.1       0.0                          
-    0:00:25    9715.6      0.01       0.1       0.0                          
-    0:00:25    9714.9      0.01       0.1       0.0                          
-    0:00:25    9714.9      0.01       0.1       0.0                          
-    0:00:25    9714.9      0.01       0.1       0.0                          
-    0:00:25    9719.1      0.00       0.0       0.0                          
-    0:00:25    9694.4      0.00       0.0       0.0                          
-    0:00:25    9692.5      0.00       0.0       0.0                          
-    0:00:25    9692.5      0.00       0.0       0.0                          
-    0:00:25    9692.5      0.00       0.0       0.0                          
-    0:00:25    9692.5      0.00       0.0       0.0                          
-    0:00:25    9692.5      0.00       0.0       0.0                          
-    0:00:25    9692.5      0.00       0.0       0.0                          
-    0:00:25    9694.4      0.00       0.0       0.0                          
-    0:00:25    9689.0      0.00       0.0       0.0                          
-    0:00:25    9679.2      0.00       0.0       0.0                          
-    0:00:26    9669.1      0.00       0.0       0.0                          
-    0:00:26    9660.6      0.00       0.0       0.0                          
-    0:00:26    9656.9      0.00       0.0       0.0                          
-    0:00:26    9648.1      0.00       0.0       0.0                          
-    0:00:26    9646.5      0.00       0.0       0.0                          
-    0:00:26    9644.6      0.00       0.0       0.0                          
-    0:00:26    9644.6      0.00       0.0       0.0                          
-    0:00:26    9644.6      0.00       0.0       0.0                          
-    0:00:26    9644.6      0.00       0.0       0.0                          
-    0:00:26    9644.6      0.00       0.0       0.0                          
-    0:00:26    9644.6      0.00       0.0       0.0                          
-    0:00:26    9644.6      0.00       0.0       0.0                          
+    0:00:04    4267.7      0.00       0.0       0.0                          
+    0:00:04    4267.7      0.00       0.0       0.0                          
+    0:00:04    4257.6      0.00       0.0       0.0                          
+    0:00:04    4255.7      0.00       0.0       0.0                          
+    0:00:04    4254.7      0.00       0.0       0.0                          
+    0:00:04    4254.7      0.00       0.0       0.0                          
+    0:00:04    4254.7      0.00       0.0       0.0                          
+    0:00:04    4254.7      0.00       0.0       0.0                          
+    0:00:04    4254.7      0.00       0.0       0.0                          
+    0:00:04    4250.7      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
+    0:00:04    4250.4      0.00       0.0       0.0                          
 Loading db file '/home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db'
 
 
@@ -547,12 +342,32 @@ Note: Symbol # after min delay cost means estimated hold TNS across all active s
   ---------------------
 1
 report_area
+Error: Width mismatch on port 'tc' of reference to 'DW_mult_pipe' in 'refs'. (LINK-3)
+Information: Building the design 'DW_mult_pipe' instantiated from design 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_0' with
+	the parameters "a_width=8,b_width=8,num_stages=12,stall_mode=0,rst_mode=0". (HDL-193)
+Warning: Cannot find the design 'DW_mult_pipe' in the library 'WORK'. (LBR-1)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_0'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_15'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_14'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_13'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_12'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_11'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_10'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_9'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_8'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_7'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_6'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_5'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_4'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_3'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_2'. (LINK-5)
+Warning: Unable to resolve reference 'DW_mult_pipe' in 'mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_MULT_STAGE12_1'. (LINK-5)
  
 ****************************************
 Report : area
 Design : mvm4_part3
 Version: J-2014.09-SP5-2
-Date   : Fri Oct 16 01:09:42 2015
+Date   : Sat Oct 17 00:07:27 2015
 ****************************************
 
 Information: Updating design information... (UID-85)
@@ -569,27 +384,30 @@ Number of macros/black boxes:               0
 Number of buf/inv:                          0
 Number of references:                       2
 
-Combinational area:               6993.671966
-Buf/Inv area:                      718.731998
-Noncombinational area:            2650.955905
+Combinational area:               1614.087989
+Buf/Inv area:                      146.832000
+Noncombinational area:            2636.325904
 Macro/Black Box area:                0.000000
 Net Interconnect area:      undefined  (Wire load has zero net area)
 
-Total cell area:                  9644.627872
+Total cell area:                  4250.413893
 Total area:                 undefined
+
+Information: This design contains black box (unknown) components. (RPT-8)
 1
 report_power
 Loading db file '/home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db'
 Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
 Warning: Design has unannotated primary inputs. (PWR-414)
 Warning: Design has unannotated sequential cell outputs. (PWR-415)
+Warning: Design has unannotated black box outputs. (PWR-428)
  
 ****************************************
 Report : power
         -analysis_effort low
 Design : mvm4_part3
 Version: J-2014.09-SP5-2
-Date   : Fri Oct 16 01:09:43 2015
+Date   : Sat Oct 17 00:07:27 2015
 ****************************************
 
 
@@ -615,12 +433,12 @@ Power-specific unit information :
     Leakage Power Units = 1nW
 
 
-  Cell Internal Power  =   2.5357 mW   (91%)
-  Net Switching Power  = 251.7426 uW    (9%)
+  Cell Internal Power  =   3.5122 mW   (65%)
+  Net Switching Power  =   1.8911 mW   (35%)
                          ---------
-Total Dynamic Power    =   2.7874 mW  (100%)
+Total Dynamic Power    =   5.4033 mW  (100%)
 
-Cell Leakage Power     = 210.7244 uW
+Cell Leakage Power     =  85.5886 uW
 
 
                  Internal         Switching           Leakage            Total
@@ -629,14 +447,15 @@ Power Group      Power            Power               Power              Power  
 io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
-clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
-register       2.3400e+03           34.6044        4.6834e+04        2.4214e+03  (  80.76%)
+clock_network      0.0000        1.2670e+03            0.0000        1.2670e+03  (  23.08%)
+register       2.9390e+03          152.6042        4.6082e+04        3.1377e+03  (  57.17%)
 sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational    195.6878          217.1382        1.6389e+05          576.7162  (  19.24%)
+combinational    573.1629          471.4473        3.9507e+04        1.0841e+03  (  19.75%)
 --------------------------------------------------------------------------------------------------
-Total          2.5357e+03 uW       251.7427 uW     2.1072e+05 nW     2.9982e+03 uW
+Total          3.5122e+03 uW     1.8911e+03 uW     8.5589e+04 nW     5.4889e+03 uW
 1
 report_timing
+Warning: Design 'mvm4_part3' has '16' unresolved references. For more detailed information, use the "link" command. (UID-341)
  
 ****************************************
 Report : timing
@@ -645,15 +464,15 @@ Report : timing
         -max_paths 1
 Design : mvm4_part3
 Version: J-2014.09-SP5-2
-Date   : Fri Oct 16 01:09:43 2015
+Date   : Sat Oct 17 00:07:27 2015
 ****************************************
 
 Operating Conditions: typical   Library: NangateOpenCellLibrary
 Wire Load Model Mode: top
 
-  Startpoint: datapath/a_reg[11][3]
+  Startpoint: datapath/genblk1[0].element/add/genblk2.next_layer/add_in_reg[1][1]
               (rising edge-triggered flip-flop clocked by clk)
-  Endpoint: datapath/genblk1[2].element/add/add_in_reg[3][15]
+  Endpoint: datapath/data_out_reg[15]
             (rising edge-triggered flip-flop clocked by clk)
   Path Group: clk
   Path Type: max
@@ -666,72 +485,82 @@ Wire Load Model Mode: top
   --------------------------------------------------------------------------
   clock clk (rise edge)                                   0.00       0.00
   clock network delay (ideal)                             0.00       0.00
-  datapath/a_reg[11][3]/CK (DFF_X1)                       0.00       0.00 r
-  datapath/a_reg[11][3]/QN (DFF_X1)                       0.07       0.07 f
-  datapath/U259/ZN (INV_X2)                               0.07       0.13 r
-  datapath/genblk1[2].element/a[3][3] (element_layer_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_2)
-                                                          0.00       0.13 r
-  datapath/genblk1[2].element/genblk1[3].mult/ia[3] (mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_5)
-                                                          0.00       0.13 r
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/a[3] (mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_5_DW_mult_tc_1)
-                                                          0.00       0.13 r
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U444/Z (XOR2_X1)
-                                                          0.09       0.22 r
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U390/ZN (NAND2_X1)
-                                                          0.05       0.27 f
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U477/ZN (OAI22_X1)
-                                                          0.05       0.31 r
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U348/ZN (INV_X1)
-                                                          0.03       0.34 f
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U103/S (FA_X1)
-                                                          0.13       0.47 r
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U102/S (FA_X1)
-                                                          0.11       0.59 f
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U400/ZN (NAND2_X1)
+  datapath/genblk1[0].element/add/genblk2.next_layer/add_in_reg[1][1]/CK (DFF_X1)
+                                                          0.00       0.00 r
+  datapath/genblk1[0].element/add/genblk2.next_layer/add_in_reg[1][1]/Q (DFF_X1)
+                                                          0.08       0.08 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/b[1] (add_layer_WIDTH16_4)
+                                                          0.00       0.08 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/B[1] (add_layer_WIDTH16_4_DW01_add_1)
+                                                          0.00       0.08 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U98/ZN (AND2_X1)
+                                                          0.05       0.13 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U125/ZN (AOI21_X1)
+                                                          0.06       0.18 r
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U180/ZN (OAI21_X1)
+                                                          0.03       0.21 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U127/ZN (AOI21_X1)
+                                                          0.04       0.26 r
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U178/ZN (OAI21_X1)
+                                                          0.03       0.29 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U124/ZN (AOI21_X1)
+                                                          0.04       0.33 r
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U182/ZN (OAI21_X1)
+                                                          0.03       0.36 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U121/ZN (AOI21_X1)
+                                                          0.04       0.41 r
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U188/ZN (OAI21_X1)
+                                                          0.03       0.44 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U184/ZN (AOI21_X1)
+                                                          0.04       0.48 r
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U191/ZN (OAI21_X1)
+                                                          0.03       0.51 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U192/ZN (AOI21_X1)
+                                                          0.04       0.55 r
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U185/ZN (INV_X1)
+                                                          0.03       0.58 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U114/ZN (NAND2_X1)
                                                           0.04       0.62 r
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U419/ZN (OAI21_X1)
-                                                          0.03       0.66 f
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U418/ZN (AOI21_X1)
-                                                          0.04       0.70 r
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U407/ZN (OAI21_X1)
-                                                          0.04       0.74 f
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U470/ZN (AOI21_X1)
-                                                          0.04       0.78 r
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U446/ZN (INV_X1)
-                                                          0.03       0.81 f
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U282/ZN (NAND2_X1)
-                                                          0.03       0.84 r
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U283/ZN (NAND3_X1)
-                                                          0.04       0.88 f
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U286/ZN (NAND2_X1)
-                                                          0.03       0.91 r
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/U258/ZN (AND3_X1)
-                                                          0.05       0.96 r
-  datapath/genblk1[2].element/genblk1[3].mult/mult_57/product[15] (mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_5_DW_mult_tc_1)
-                                                          0.00       0.96 r
-  datapath/genblk1[2].element/genblk1[3].mult/out[15] (mult_layer_INPUT_WIDTH8_OUTPUT_WIDTH16_5)
-                                                          0.00       0.96 r
-  datapath/genblk1[2].element/add/in[3][15] (recursive_add_layer_INPUT_SCALE4_WIDTH16_INTERREG1_2)
-                                                          0.00       0.96 r
-  datapath/genblk1[2].element/add/add_in_reg[3][15]/D (DFF_X1)
-                                                          0.01       0.97 r
-  data arrival time                                                  0.97
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U116/ZN (NAND3_X1)
+                                                          0.04       0.66 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U107/ZN (NAND2_X1)
+                                                          0.03       0.69 r
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U109/ZN (NAND3_X1)
+                                                          0.04       0.72 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U3/CO (FA_X1)
+                                                          0.09       0.81 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/U172/ZN (XNOR2_X1)
+                                                          0.06       0.87 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/adder/SUM[15] (add_layer_WIDTH16_4_DW01_add_1)
+                                                          0.00       0.87 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/genblk2.add_two_number/out[15] (add_layer_WIDTH16_4)
+                                                          0.00       0.87 f
+  datapath/genblk1[0].element/add/genblk2.next_layer/out[15] (recursive_add_layer_INPUT_SCALE2_WIDTH16_0)
+                                                          0.00       0.87 f
+  datapath/genblk1[0].element/add/out[15] (recursive_add_layer_INPUT_SCALE4_WIDTH16_INTERREG1_0)
+                                                          0.00       0.87 f
+  datapath/genblk1[0].element/y[15] (element_layer_MAT_SCALE4_INPUT_WIDTH8_OUTPUT_WIDTH16_INTERREG1_MULT_STAGE12_0)
+                                                          0.00       0.87 f
+  datapath/U447/ZN (AOI22_X1)                             0.05       0.92 r
+  datapath/U445/ZN (NAND2_X1)                             0.03       0.95 f
+  datapath/data_out_reg[15]/D (DFF_X1)                    0.01       0.96 f
+  data arrival time                                                  0.96
 
   clock clk (rise edge)                                   1.00       1.00
   clock network delay (ideal)                             0.00       1.00
-  datapath/genblk1[2].element/add/add_in_reg[3][15]/CK (DFF_X1)
-                                                          0.00       1.00 r
-  library setup time                                     -0.03       0.97
-  data required time                                                 0.97
+  datapath/data_out_reg[15]/CK (DFF_X1)                   0.00       1.00 r
+  library setup time                                     -0.04       0.96
+  data required time                                                 0.96
   --------------------------------------------------------------------------
-  data required time                                                 0.97
-  data arrival time                                                 -0.97
+  data required time                                                 0.96
+  data arrival time                                                 -0.96
   --------------------------------------------------------------------------
   slack (MET)                                                        0.00
 
 
 1
 write -f verilog $TOP_MOD_NAME -output gates.v -hierarchy
+Warning: Design 'mvm4_part3' has '16' unresolved references. For more detailed information, use the "link" command. (UID-341)
 Writing verilog file '/home/home5/xchen/ese507work/proj2/part3/gates.v'.
 Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
 1

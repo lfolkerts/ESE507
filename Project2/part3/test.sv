@@ -1,13 +1,19 @@
 module testbench();
 	// Design parameters. Changing these values will affect the whole design.
 	parameter MAT_SCALE = 4, INPUT_WIDTH = 8, OUTPUT_WIDTH = 16;
-	parameter INTERREG = 1;
+	// Params:
+	// INTERREG: 0--No stages between operations, thw whole process takes one cycle;
+	//			 1--There are stages between each layer of multipliers and adders, log(MAT_SCALE) layers in total;
+	// MULT_STAGE: < 2--One cycle multiplier;
+	//			  >= 2--Number of multiplier stages.
+	parameter INTERREG = 1, MULT_STAGE = 6;
+	
 	logic clk, reset, start;
 	logic done;
 	logic signed [INPUT_WIDTH - 1:0] data_in;
 	logic signed [OUTPUT_WIDTH - 1:0] data_out;
 	
-	mvm4_part3 #(MAT_SCALE, INPUT_WIDTH, OUTPUT_WIDTH, INTERREG) dut(clk, reset, start, done, data_in, data_out);
+	mvm4_part3 #(MAT_SCALE, INPUT_WIDTH, OUTPUT_WIDTH, INTERREG, MULT_STAGE) dut(clk, reset, start, done, data_in, data_out);
 	
 	initial clk = 0;
 	always #5 clk  = ~clk;
@@ -95,8 +101,10 @@ module testbench();
 		
 	end
 	
+	// Get output & compare
 	initial begin
 		integer u, v;
+		// Skip reset cycles
 		@(posedge clk);
 		@(posedge clk);
 		@(posedge clk);
