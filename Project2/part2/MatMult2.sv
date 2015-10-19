@@ -107,6 +107,7 @@ module control(clk, start, reset, addr_x, wr_en_x, addr_a, wr_en_a, addr_y, wr_e
 	// FSM
 	always_ff @ (posedge clk) begin
 		if (reset == 1) begin
+			state <= 6'b000000;
 			wr_en_a <= 0;
 			wr_en_x <= 0;
 			wr_en_y <= 0;
