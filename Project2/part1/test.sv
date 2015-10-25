@@ -13,7 +13,7 @@ module testbench();
 	
 	initial begin
 		integer fin, fout, fslt;
-		integer i, j, k, n;
+		integer i, j, k, n, mid_reset;
 		
 		// Avoid overflow
 		static integer input_range = $floor($sqrt((2 ** (OUTPUT_WIDTH - 1) - 1) / MAT_SCALE));
@@ -36,6 +36,7 @@ module testbench();
 		// Intial
 		reset = 0;
 		start = 0;
+		mid_reset = $random % (n - 1) + 1;
 		
 		// Reset
 		@(posedge clk);
@@ -44,6 +45,13 @@ module testbench();
 		#1 reset = 0;
 		
 		for (i = 0; i < n; i++) begin
+			if (i == mid_reset) begin
+				// Simulate reset in the process
+				@(posedge clk);
+				#1 reset = 1;
+				@(posedge clk);
+				#1 reset = 0;
+			end
 			// Start
 			@(posedge clk);
 			#1 start = 1;
