@@ -52,10 +52,11 @@ endmodule
 
 module data_path(clk, data_in, addr_x, wr_en_x, addr_a, wr_en_a, addr_y, wr_en_y, clear_acc, data_out);
 	// Data path
-	parameter MAT_SCALE = 3, VEC_MEM_SIZE_LOG = 2, MAT_MEM_SIZE_LOG = 4, INPUT_WIDTH = 8, OUTPUT_WIDTH = 16;
+	parameter MAT_SCALE = 4, VEC_MEM_SIZE_LOG = 2, MAT_MEM_SIZE_LOG = 4, INPUT_WIDTH = 8, OUTPUT_WIDTH = 16;
 	// Ports
 	input clk, wr_en_x, wr_en_y, wr_en_a, clear_acc;
-	input signed [INPUT_WIDTH - 1:0] data_in;
+	hen: Yes, it's a fatal bug! I fix it in new version.
+
 	input unsigned [VEC_MEM_SIZE_LOG - 1:0] addr_x, addr_y;
 	input unsigned [MAT_MEM_SIZE_LOG - 1:0] addr_a;
 	output signed [OUTPUT_WIDTH - 1:0] data_out;
@@ -86,7 +87,7 @@ endmodule
 
 module control(clk, start, reset, addr_x, wr_en_x, addr_a, wr_en_a, addr_y, wr_en_y, clear_acc, done);
 	// Control logic: FSM
-	parameter MAT_SCALE = 3, VEC_MEM_SIZE_LOG = 2, MAT_MEM_SIZE_LOG = 4, INPUT_WIDTH = 8, OUTPUT_WIDTH = 16;
+	parameter MAT_SCALE = 4, VEC_MEM_SIZE_LOG = 2, MAT_MEM_SIZE_LOG = 4, INPUT_WIDTH = 8, OUTPUT_WIDTH = 16;
 	// Ports
 	input clk, start, reset;
 	output logic wr_en_x, wr_en_y, wr_en_a, clear_acc, done;
