@@ -1,15 +1,37 @@
-module element_layer(clk, a, x, y);
+module mult_accum(clk, a, x, out);
         parameter MAT_SCALE = #k#, INPUT_WIDTH = #b#, OUTPUT_WIDTH = INPUT_WIDTH*2;
         input clk;
         input signed [MAT_SCALE - 1:0][INPUT_WIDTH - 1:0] a, x;
-        output signed [OUTPUT_WIDTH - 1:0] y;
+        output signed [OUTPUT_WIDTH - 1:0] pp_out;
+        logic [OUTPUT_WIDTH - 1:0] out;
 
-        logic [MAT_SCALE - 1:0][OUTPUT_WIDTH - 1:0] mult_out;
         generate
+		my_reg #(OUTPUT_WIDTH) reg_out (.clk(clk), .d(pp_out), .reset(reset), .enable(1'b1), .q(out));
+
                 always_comb begin
-                        out = a*x+y;
+                        pp_out = a*x + out;
                 end
+
         endgenerate
 
+endmodule
+
+module my_reg(clk, d, reset, enable, q);
+ parameter REG_WIDTH = 2*#b#;
+ input [N-1:0] d;
+ input reset, enable, clk;
+ output logic [N-1:0] q;
+
+        always_ff @(posedge clk) begin
+                if(reset == 1) begin
+                        q <= 0;
+                end
+                else if (enable == 1) begin
+                        q <= d;
+                end
+                else begin
+                        q <= q;
+                end
+        end
 endmodule
 
