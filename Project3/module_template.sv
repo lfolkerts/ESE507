@@ -142,18 +142,18 @@ module singlepath(clk, reset, data_in, a_wr, x_wr, start, ready, y_rd, data_out,
 	logic a_of, x_of, y_of, acc_aux;
 
 	always_comb begin
-		fdbk[0] = a_of; fdbk[1] = x_of; fdbk[2] = y_of;
+		fdbk[0] = a_of & a_we; fdbk[1] = x_of; fdbk[2] = y_of & y_re;
 	end
 
 	seqMemory #(b, MAT_SIZE) Mat_a_Mem(clk, reset, a_we, data_in, a_re, a_out, a_of);
 	seqMemory #(b, VEC_SIZE) Vec_x_Mem(clk, reset, x_we, data_in, x_re, x_out, x_of);
 	generate
 		if (g == 0) begin
-			seqMemory #(2 * b, VEC_SIZE) Vec_y_Mem(clk, reset, y_we, y_in, y_re, data_out, y_of);
+			seqMemory #(2 * b, n_row) Vec_y_Mem(clk, reset, y_we, y_in, y_re, data_out, y_of);
 		end
 		else if (g == 1) begin
 			logic y_we_aux;
-			seqMemory #(2 * b, VEC_SIZE) Vec_y_Mem(clk, reset, y_we_aux, y_in, y_re, data_out, y_of);
+			seqMemory #(2 * b, n_row) Vec_y_Mem(clk, reset, y_we_aux, y_in, y_re, data_out, y_of);
 			always_ff @ (posedge clk) begin
 				y_we_aux <= y_we;
 			end
@@ -265,7 +265,7 @@ module multipath(clk, reset, startMatrix, startVector, start, done, data_in, dat
 
 	localparam CALC_CYCLE = k * (k / p) + g, LOG_CALC_CYCLE = $clog2(CALC_CYCLE);
 	logic [LOG_CALC_CYCLE - 1:0] calc_cntr;
-	logic [k / p - 1:0][2:0] fdbk;
+	logic [p - 1:0][2:0] fdbk;
 	logic y_rd, delay, c_of;
 	
 	increaser #(LOG_CALC_CYCLE, CALC_CYCLE - 1) Incr(clk, reset, calc_cntr, c_of, delay, reset);
@@ -274,7 +274,7 @@ module multipath(clk, reset, startMatrix, startVector, start, done, data_in, dat
 		genvar i;
 		singlepath #(k / p, k, b, g) path(clk, reset, data_in, startMatrix, startVector, start, , y_rd, data_out, fdbk[0][2:0]);
 		for (i = 1; i < p; i++) begin
-			singlepath #(k / p, k, b, g) path(clk, reset, data_in, fdbk[i - 1][0], fdbk[i - 1][1], start, , fdbk[i - 1][2], data_out, fdbk[i][2:0]);
+			singlepath #(k / p, k, b, g) path(clk, reset, data_in, fdbk[i - 1][0], startVector, start, , fdbk[i - 1][2], data_out, fdbk[i][2:0]);
 		end
 	endgenerate
 	

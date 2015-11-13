@@ -7,7 +7,7 @@ module testbench();
 	logic signed [INPUT_WIDTH - 1:0] data_in;
 	logic signed [OUTPUT_WIDTH - 1:0] data_out;
 	
-	mvm_3_1_8_0 # (#k#, #p#, #b#, #g#) test(clk, reset, startMatrix, startVector, start, done, data_in, data_out);
+	mvm_#k#_#p#_#b#_#g# #(#k#, #p#, #b#, #g#) test(clk, reset, startMatrix, startVector, start, done, data_in, data_out);
 	
 	initial clk = 0;
 	always #5 clk  = ~clk;
@@ -110,7 +110,7 @@ module testbench();
 			for (j = 0; j < MAT_SCALE; j++) begin
 				@(posedge clk);
 				#1 $fwrite(fout, "%d\n", $signed(data_out));
-				if (data_out != y[j]) begin
+				if (data_out !== y[j]) begin
 					$display("Test failed in #%d", i + 1);
 					$fclose(fin);
 					$fclose(fout);
