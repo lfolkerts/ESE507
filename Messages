@@ -1,53 +1,7 @@
-Lars Folkerts
-- Started Report in Libre OFfice. Left progress in pdf form
-- Will eventually move to word when I get my hands on my laptop
-- progress will be slow since I am busy this weekend, but I will make small upsates every time I have a couple of hours
-
--- More comments about code
-The RESET in the control path should also set the state to idle 06b'000000
----Chen: Yes, it's a fatal bug! I fix it in new version.
-
 Xuan Chen
-- Find any flaws in part 1 & 2?
-- A new version of part 3 committed
-
---Oct 16--
-- Add pipelining switch to part3
-
---Oct 18--
-- Add pipelined multipler
-- Several bugs fixed
-- Diagrams of part1 and part3 rendered (Project2/Report/diagrams.zip)
-
---New Oct 25--
-- Add random reset test within inputs
-- I have read your report. Grasp points among all the three parts and every questions are answered in detail. Great! It seems you are not very familiar with MS Word, so I reformat by using Style and Reference. The new version is Report_v1.5.docx. I reserve the delimiters because I didn't figure out how they work..
-- I resynthesized each part and result in differences. the max frequency in part1 is 1/1.18GHz, part2 is 1/1.14GHz(kind of weird, though...), part3 is 1/0.48GHz. I have modified the text part and calculations and you'd better update tables (why do you convert table to image? copy from excel and paste).
-- Everything is nearly over, get them done and we can submit.
-
-Added Files
-
-
----------------------------------------------
-
-Lars' Comments about parts 1 and 2
-	- Overall good job, very generic code that can be easily adapted in case something goes wrong
-	- Variable names are good and easy to understand
-		- Would it be possible to name the states directly as 06b'XXXXXX constants (i.e. Case STATE_LOOPA) instead of viewing the numbers and having the state names in comments? It was a little confusing and I had to draw it out on paper
-	- I also did not like the incomplete listing of variables in the control block. I feel like it is easy to mess up what each signal is in the state (e.g. what was inc_y set to again). I think it would make the code more readable too, the tradeoff beeing the difficulty scrolling through many lines of code.
-	- Control block needs a little more comments about what is going on
-	- Your testbench is good. I implemented mine a little differently for project 1, where I wrote C code to generate sample inputs and solutions, then read the inputs and compared the outputs in the testbench. But your way is simpler and works fine - It is likely better since my way took a lot f time. 
-	- Default parameters can be relative to each other. OUTPUT_SIZE = 2*INPUT_SIZE
-
-++ Modified default parameter in part 2 from 3 to 4. It was specified in the testbench, but professor's testbench will likely use the default parameters
-+++ Chen: I noticed this problem, what is more serious is that synthesis tool will use default parameters. I have no better idea unless we specify parameters in top module and instantiate in testbench with default params.
-	
-Chen's Comments
-	- Naming states requires a lot of parameters, there is a short line of comment under each case branch that describes that state. I could update it after part3 finished.
-	- Control block contains plenty of logic and I will send you document in a while since I have classes all day:(
-	- I usually guarantee part3 working before committing. Now you can switch on/off intermediate stages by setting parameters(boolean). Next I'm going to use standard components.
-	- How's the report? Feel free to ask me if you have any difficulty.
-
-++ I prepared some diagrams of part1 FSM and part3, which I think is useful to understand. However, you already drew yourself in the report... Anyway, you can refer to my diagrams or insert any of them into report as you like.
-++ After applying pipelined multipliers, the critical path appears in adders. I didn't find pipelined adders in the Synopsys document, so that current maximum frequancy is 2.083GHz(0.48ns), throughput based delay is 0.48*20=9.6ns. Under given input timing, there is no faster architectures. The only way to increase speed is to use pipelined adder.
-++ By the way, the naming principle is basically the following: clr=clear, incr=increase (by 1), of=overflow.
+- Nov 11
+	+ Update templates of modules and testbench, c++ substitution demo.
+	+ Parameters k, b, g work well under p=1, it still needs debug when p=k.
+Comments:
+	@ Testbench template needs improvement, you can work on that.
+	@ Codes are messy now, and lack comments.
