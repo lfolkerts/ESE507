@@ -1,0 +1,38 @@
+#!/bin/csh
+
+@ i = 1
+
+if ($#argv == 0) then
+	echo At least one argument is needed.
+	goto ARGERROR
+else
+	switch ($argv[$i])
+	case clean:
+		cd ./hdl
+		rm -f -r *
+		cd ..
+		exit 0
+		breaksw
+	case test:
+		if ($#argv != 5) then
+			echo '4 argument should be entered.'
+			exit(1)
+		endif
+		cd ./src
+		make
+		./gen $argv[2] $argv[3] $argv[4] $argv[5]
+		cd ../hdl
+		vlog +acc *.sv
+		vsim testbench -c -do "run -all"
+		cd ..
+		exit(0)
+	default:
+		echo \'$argv[$i]\' is not a valid command.
+
+	endsw
+endif
+
+ARGERROR:
+		echo ----Command----
+		echo '\t'----test (4 args)		test under given condition
+		echo '\t'----clean			remove all files in ./hdl
