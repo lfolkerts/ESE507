@@ -18,13 +18,41 @@ module testbench();
 	initial clk = 0;
 	always #5 clk  = ~clk;
 	
+	// The function generates random integer greater than 32 bits.
+	function [INPUT_WIDTH - 1:0] LongRandom(input [INPUT_WIDTH - 1:0] range);
+		int n, i;
+		bit flag;
+		bit [INPUT_WIDTH - 1:0] val;
+		n = $floor(INPUT_WIDTH / 32);
+		flag = 0;
+		if (n * 32 < INPUT_WIDTH) begin
+			val[n * 32 +: INPUT_WIDTH % 32] = $random % range[n * 32 +: INPUT_WIDTH % 32];
+			if (val[n * 32 +: INPUT_WIDTH % 32] < range[n * 32 +: INPUT_WIDTH % 32])
+				flag = 1;
+		end
+		for (i = n - 1; i >= 0; i--) begin
+			if (flag == 0)
+				val[i * 32 +: 32] = $random % range[i * 32 +: 32];
+			else
+				val[i * 32 +: 32] = $random;
+			if (val[i * 32 +: 32] < range[i * 32 +: 32])
+				flag = 1;
+		end
+		LongRandom = val;
+	endfunction
+	
 	initial begin
 		integer j, k, mid_reset;
 		integer unsigned t;
 		
 		// Avoid overflow
-		static integer input_range = $floor($sqrt((2 ** (OUTPUT_WIDTH - 1) - 1) / MAT_SCALE));
-		
+		bit [OUTPUT_WIDTH - 1:0] output_range;
+		bit [INPUT_WIDTH - 1:0] input_range;
+		output_range = 2 ** (OUTPUT_WIDTH - 1) - 1;
+		// $display("output_range = %0d", output_range);
+		// $display("product_range = %0d", output_range / MAT_SCALE);
+		input_range = (output_range / MAT_SCALE) ** 0.5;
+		// $display("input_range = %0d", input_range);
 		
 		// Open files.
 			// Input data file
@@ -72,7 +100,7 @@ module testbench();
 				#1 loadMatrix = 0;
 				for (j = 0; j < MAT_SCALE; j++) begin
 					for (k = 0; k < MAT_SCALE; k++) begin
-						a[j * MAT_SCALE + k] = -input_range + $random % (input_range * 2);
+						a[j * MAT_SCALE + k] = -input_range + LongRandom(input_range * 2);
 						data_in = a[j * MAT_SCALE + k];
 						$fwrite(fin, "%d ", $signed(a[j * MAT_SCALE + k]));
 						@(posedge clk);
@@ -88,7 +116,7 @@ module testbench();
 				@(posedge clk);
 				#1 loadVector = 0;
 				for (j = 0; j < MAT_SCALE; j++) begin
-					x[j] = -input_range + $random % (input_range * 2);
+					x[j] = -input_range + LongRandom(input_range * 2);
 					data_in = x[j];
 					$fwrite(fin, "%d\n", $signed(x[j]));
 					@(posedge clk);

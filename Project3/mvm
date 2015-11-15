@@ -9,7 +9,29 @@ else
 	switch ($argv[$i])
 	case clean:
 		cd ./hdl
-		rm -f -r *
+		rm -r -f `ls -1 | awk ' \
+		{ \
+			if ($0 !~ /((README)|(setupdc.tcl)|(runsynth.tcl)|(test_(input|output|solution)(_[0-9]+){4}\.txt)|(x_chen_mvm(|_tb)(_[0-9]+){4}\.sv)|(synthesis_report(_[0-9]+){4}\.txt))/) { \
+				print $0 \
+			} \
+		}'`
+		cd ..
+		exit 0
+		breaksw
+	case clear:
+		cd ./hdl
+		echo 'Are you sure you want to delete all files under hdl/, including all design files and test/synthesis records?(y/n)'
+		set res = $<
+		if ($res != y) then
+			echo 'Deletion cancelled.'
+			exit(0)
+		endif
+		rm -r -f `ls -1 | awk ' \
+		{ \
+			if ($0 !~ /((README)|(setupdc.tcl))/) { \
+				print $0 \
+			} \
+		}'`
 		cd ..
 		exit 0
 		breaksw
@@ -18,12 +40,34 @@ else
 			echo '4 argument should be entered.'
 			exit(1)
 		endif
+		./mvm clean
 		cd ./src
 		make
 		./gen $argv[2] $argv[3] $argv[4] $argv[5]
 		cd ../hdl
-		vlog +acc *.sv
+		vlib work
+		set ds_name = "x_chen_mvm_$argv[2]_$argv[3]_$argv[4]_$argv[5].sv"
+		set tb_name = "x_chen_mvm_tb_$argv[2]_$argv[3]_$argv[4]_$argv[5].sv"
+		vlog +acc $ds_name $tb_name
 		vsim testbench -c -do "run -all"
+		cd ..
+		exit(0)
+	case synth:
+		if ($#argv != 5) then
+			echo '4 argument should be entered.'
+			exit(1)
+		endif
+		./mvm clean
+		cd ./src
+		make
+		./gen $argv[2] $argv[3] $argv[4] $argv[5]
+		cd ../hdl
+		vlib work
+		set ds_name = "x_chen_mvm_$argv[2]_$argv[3]_$argv[4]_$argv[5].sv"
+		set sr_name = "synthesis_report_$argv[2]_$argv[3]_$argv[4]_$argv[5].txt"
+		vlog +acc $ds_name
+		echo "Synthesizing..."
+		dc_shell -f runsynth.tcl | tee $sr_name
 		cd ..
 		exit(0)
 	default:
@@ -34,5 +78,7 @@ endif
 
 ARGERROR:
 		echo ----Command----
-		echo '\t'----test (4 args)		test under given condition
-		echo '\t'----clean			remove all files in ./hdl
+		echo '\t'----test \(4 args\)'\t''\t'	test under given condition
+		echo '\t'----synth \(4 args\)'\t''\t'	synthesize under given condition
+		echo '\t'----clear'\t''\t''\t'		remove temporary files in ./hdl
+		echo '\t'----clean'\t''\t''\t'		remove all files in ./hdl

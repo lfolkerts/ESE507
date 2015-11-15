@@ -96,10 +96,11 @@ int main(int argc, char *argv[])
 	
 	// Generate filenames and systemverilog files.
 	stringstream mod_name, tb_name;
-	mod_name << "x_chen_mvm_" << v_k << "_" << v_p << "_" << v_b << "_" << v_g << ".sv";
-	tb_name << "x_chen_mvm_tb_" << v_k << "_" << v_p << "_" << v_b << "_" << v_g << ".sv";
+	mod_name << "..//hdl//x_chen_mvm_" << v_k << "_" << v_p << "_" << v_b << "_" << v_g << ".sv";
+	tb_name << "../hdl//x_chen_mvm_tb_" << v_k << "_" << v_p << "_" << v_b << "_" << v_g << ".sv";
 	substitute("Template//mvm.template", mod_name.str());
 	substitute("Template//mvm_tb.template", tb_name.str());
+	substitute("Template//runsynth.template", "..//hdl//runsynth.tcl");
 
 	return 0;
 }
