@@ -4,7 +4,7 @@
 
 #define CHECK(x, y) {\
 	if (!(x)) {\
-		cout << y << endl;\
+		cout << (y) << endl;\
 		exit(1);\
 	}\
 }
