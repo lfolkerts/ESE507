@@ -1,5 +1,5 @@
-module mvm_#k#_#p#_#b#_#g#(clk, reset, loadMatrix, loadVector, start, done, data_in, data_out);
-	parameter k = #k#, p = #p#, b = #b#, g = #g#;
+module mvm_5_1_11_0(clk, reset, loadMatrix, loadVector, start, done, data_in, data_out);
+	parameter k = 5, p = 1, b = 11, g = 0;
 	input clk, reset, loadMatrix, loadVector, start;
 	output logic done;
 	input signed [b - 1:0] data_in;
@@ -10,7 +10,7 @@ module mvm_#k#_#p#_#b#_#g#(clk, reset, loadMatrix, loadVector, start, done, data
 endmodule
 
 module mac(clk, reset, clr, in0, in1, out);
-	parameter b = #b#, g = #g#;
+	parameter b = 11, g = 0;
 	input clk, reset, clr;
 	input signed [b - 1:0] in0, in1;
 	output logic signed [2 * b - 1:0] out;
@@ -57,7 +57,7 @@ module mac(clk, reset, clr, in0, in1, out);
 endmodule
 
 module increaser(clk, reset, out, of, en, clr);
-	parameter b = #b#, TOP = #k#;
+	parameter b = 11, TOP = 5;
 	input clk, reset, en, clr;
 	output logic of;
 	output logic unsigned [b - 1:0] out;
@@ -87,7 +87,7 @@ module increaser(clk, reset, out, of, en, clr);
 endmodule
 
 module memory(clk, reset, data_in, data_out, addr, wr_en, rd_en);
-	parameter b = #b#, SIZE = #k#, LOGSIZE = (SIZE > 1 ? $clog2(SIZE) : 1);
+	parameter b = 11, SIZE = 5, LOGSIZE = $clog2(SIZE);
 	input clk, reset;
 	input [b - 1:0] data_in;
 	output logic [b - 1:0] data_out;
@@ -115,7 +115,7 @@ module memory(clk, reset, data_in, data_out, addr, wr_en, rd_en);
 endmodule
 
 module seqMemory(clk, reset, wr, data_in, rd, data_out, of);
-	parameter b = #b#, SIZE = #k#, LOGSIZE = (SIZE > 1 ? $clog2(SIZE) : 1);
+	parameter b = 11, SIZE = 5, LOGSIZE = $clog2(SIZE);
 	input clk, reset, wr, rd;
 	input signed [b - 1:0] data_in;
 	output signed [b - 1:0] data_out;
@@ -128,7 +128,7 @@ module seqMemory(clk, reset, wr, data_in, rd, data_out, of);
 endmodule
 
 module singlepath(clk, reset, data_in, a_wr, x_wr, start, ready, y_rd, data_out, fdbk);
-	parameter n_row = 1, n_col = #k#, b = #b#, g = #g#;
+	parameter n_row = 1, n_col = 5, b = 11, g = 0;
 	input clk, reset, a_wr, x_wr, start, y_rd;
 	input signed [b - 1:0] data_in;
 	output logic ready;
@@ -257,7 +257,7 @@ endmodule
 
 
 module multipath(clk, reset, startMatrix, startVector, start, done, data_in, data_out);
-	parameter k = #k#, p = #p#, b = #b#, g = #g#;
+	parameter k = 5, p = 1, b = 11, g = 0;
 	input clk, reset, startMatrix, startVector, start;
 	output logic done;
 	input signed [b - 1:0] data_in;
@@ -295,5 +295,6 @@ module multipath(clk, reset, startMatrix, startVector, start, done, data_in, dat
 	end
 
 endmodule
+
 
 
