@@ -16,7 +16,7 @@ fi
 cp /home/home4/pmilder/ese507/ese507setup-csh ./tmp
 source tmp/ese507setup-csh
 cp /home/home4/pmilder/ese507/synthesis/scripts/setupdc.tcl ./tmp
-echo "" > $OUTFILE
+echo "Bits,Matrix Size,Pipelining,Parallelism,Frequency,Slack,Slack,Comb Area,Buf Area,Non-Comb Area,Total Area,Dyn Power (uW),Leakage Power (uW)" > $OUTFILE
 
 for b in 4 8 16 32 64 128 256 512 1024
 do	
