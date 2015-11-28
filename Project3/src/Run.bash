@@ -52,7 +52,7 @@ do
 				rm tmp/test_tmp #done with this file
 				cp tmp/runsynth.tcl tmp/runsynth_template.tcl #have a baseline - we only need to change frequencies in this iteration
 
-				SYNTHT="1000"
+				SYNTHT="700"
 				COUNT="0"
 				INC="100"
 				while [ $COUNT -lt 10 ]  #valid data points
