@@ -18,9 +18,9 @@ source tmp/ese507setup-csh
 cp /home/home4/pmilder/ese507/synthesis/scripts/setupdc.tcl ./tmp
 echo "Bits,Matrix Size,Pipelining,Parallelism,Frequency,Slack,Slack,Comb Area,Buf Area,Non-Comb Area,Total Area,Dyn Power (uW),Leakage Power (uW)" > $OUTFILE
 
-for b in 4 8 16 32 64 128 256 512 1024
+for b in 4 8 16 32 64
 do	
-	for k in 4 5 6 7 8 12 16 24 32 64 128 256 512 1024 2048 4096 9192
+	for k in 4 8 16 32 64
 	do
 		for g in 0 1
 		do
@@ -51,8 +51,11 @@ do
 
 				rm tmp/test_tmp #done with this file
 				cp tmp/runsynth.tcl tmp/runsynth_template.tcl #have a baseline - we only need to change frequencies in this iteration
-
-				SYNTHT="700"
+				if [ "$g" -eq "0" ]; then #we cheat here since we already know the clock times - saves time
+					SYNTHT="1010"
+				else
+					SYNTHT="730"
+				fi
 				COUNT="0"
 				INC="100"
 				while [ $COUNT -lt 10 ]  #valid data points
