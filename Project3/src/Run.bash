@@ -99,7 +99,7 @@ do
 					#power - need to convert units
 					for POWER_STR in "Total Dynamic Power" "Cell Leakage Power"
 					do	
-						grep "$POWER_STR" outdc.txt	
+					#	grep "$POWER_STR" outdc.txt	
 						if  grep "$POWER_STR" outdc.txt | grep -P -o "[-]*[0-9]+[.]*[0-9]+.*W" | grep --quiet  m  
 						then
 							POWER=$(grep "$POWER_STR" outdc.txt | grep -P -o "[-]*[0-9]+[.]*[0-9]+.*W" | awk '{a+=$0; printf a}')
@@ -115,7 +115,7 @@ do
 							POWER=$(grep "$POWER_STR" outdc.txt | grep -P -o "[-]*[0-9]+[.]*[0-9]+")
 							POWER=$(bc -l <<< "$POWER*1000000")
 						fi
-						echo $POWER
+					#	echo $POWER
 						printf "$POWER," >>../$OUTFILE
 					done
 					
