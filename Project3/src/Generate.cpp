@@ -9,6 +9,13 @@
 	}\
 }
 
+#define WARN(x, y) {\
+        if ((x)) {\
+                cout << (y) << endl;\
+        }\
+}
+
+
 using namespace std;
 
 string k, p, b, g;
@@ -93,7 +100,10 @@ int main(int argc, char *argv[])
 	CHECK(v_p == 1 || v_p == v_k, "p should be 1 or k.");
 	CHECK(v_b >= 4, "b should be no less than 4.");
 	CHECK(v_g == 0 || v_g == 1, "g should be 0 or 1.");
-	
+
+	WARN(v_p > 64, "p is very large - placement will be difficult");
+	WARN(v_b > 512, "b is large - testbench will not simulate correctly");
+ 
 	// Generate filenames and systemverilog files.
 	stringstream mod_name, tb_name;
 	mod_name << "..//hdl//x_chen_mvm_" << v_k << "_" << v_p << "_" << v_b << "_" << v_g << ".sv";
