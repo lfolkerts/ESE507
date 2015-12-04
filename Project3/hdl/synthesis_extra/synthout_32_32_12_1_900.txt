@@ -1,0 +1,1208 @@
+
+                      Design Compiler Graphical
+                            DC Ultra (TM)
+                             DFTMAX (TM)
+                         Power Compiler (TM)
+                           DesignWare (R)
+                           DC Expert (TM)
+                         Design Vision (TM)
+                          HDL Compiler (TM)
+                         VHDL Compiler (TM)
+                            DFT Compiler
+                        Library Compiler (TM)
+                         Design Compiler(R)
+
+         Version J-2014.09-SP5-2 for RHEL64 -- Jul 11, 2015
+               Copyright (c) 1988-2015 Synopsys, Inc.
+
+This software and the associated documentation are confidential and 
+proprietary to Synopsys, Inc. Your use or disclosure of this software 
+is subject to the terms and conditions of a written license agreement 
+between you, or your company, and Synopsys, Inc.
+
+Initializing...
+##############################################
+# Setup: fill out the following parameters: name of clock signal, clock period (ns),
+# reset signal name (if used), name of top-level module, name of source file
+set CLK_NAME "clk";
+clk
+set CLK_PERIOD .90000000000000000000;
+.90000000000000000000
+set RST_NAME "reset";
+reset
+set TOP_MOD_NAME "mvm_32_32_12_1";
+mvm_32_32_12_1
+set SRC_FILE "test.sv";
+test.sv
+###############################################
+source setupdc.tcl
+NangateOpenCellLibrary_typical.db dw_foundation.sldb
+file mkdir work_synth
+define_design_lib WORK -path work_synth
+1
+analyze $SRC_FILE -format sverilog
+Running PRESTO HDLC
+Searching for ./test.sv
+Compiling source file ./test.sv
+Presto compilation completed successfully.
+Loading db file '/home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db'
+Loading db file '/usr/local/synopsys/syn/libraries/syn/dw_foundation.sldb'
+1
+elaborate -work WORK $TOP_MOD_NAME
+Loading db file '/usr/local/synopsys/syn/libraries/syn/gtech.db'
+Loading db file '/usr/local/synopsys/syn/libraries/syn/standard.sldb'
+  Loading link library 'NangateOpenCellLibrary'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+Presto compilation completed successfully.
+Elaborated 1 design.
+Current design is now 'mvm_32_32_12_1'.
+Information: Building the design 'multipath' instantiated from design 'mvm_32_32_12_1' with
+	the parameters "32,32,12,1". (HDL-193)
+
+Inferred memory devices in process
+	in routine multipath_k32_p32_b12_g1 line 281 in file
+		'./test.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      y_rd_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      done_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      delay_reg      | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'increaser' instantiated from design 'multipath_k32_p32_b12_g1' with
+	the parameters "6,32". (HDL-193)
+
+Inferred memory devices in process
+	in routine increaser_b6_TOP32 line 65 in file
+		'./test.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       out_reg       | Flip-flop |   6   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'singlepath' instantiated from design 'multipath_k32_p32_b12_g1' with
+	the parameters "1,32,12,1|((E%)(E%)(E%)(E%)(E%)(E%)(X%)(E%)(E%)(E%))". (HDL-193)
+
+Statistics for case statements in always block at line 173 in file
+	'./test.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           189            |     no/auto      |
+===============================================
+
+Inferred memory devices in process
+	in routine singlepath_n_row1_n_col32_b12_g1 line 157 in file
+		'./test.sv'.
+================================================================================
+|    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+================================================================================
+| genblk1.y_we_aux_reg | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+================================================================================
+
+Inferred memory devices in process
+	in routine singlepath_n_row1_n_col32_b12_g1 line 173 in file
+		'./test.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      y_re_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|     acc_aux_reg     | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      y_we_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      ready_reg      | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      x_re_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      state_reg      | Flip-flop |   6   |  Y  | N  | N  | N  | N  | N  | N  |
+|      a_we_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      x_we_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      a_re_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'seqMemory' instantiated from design 'singlepath_n_row1_n_col32_b12_g1' with
+	the parameters "12,32". (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'seqMemory' instantiated from design 'singlepath_n_row1_n_col32_b12_g1' with
+	the parameters "24,1". (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'mac' instantiated from design 'singlepath_n_row1_n_col32_b12_g1' with
+	the parameters "12,1". (HDL-193)
+Warning:  ./test.sv:21: signed to unsigned assignment occurs. (VER-318)
+Warning:  ./test.sv:42: unsigned to signed assignment occurs. (VER-318)
+Warning:  ./test.sv:51: signed to unsigned assignment occurs. (VER-318)
+
+Inferred memory devices in process
+	in routine mac_b12_g1 line 44 in file
+		'./test.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+| genblk1.clr_aux_reg | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+| genblk1.add_in_reg  | Flip-flop |  24   |  Y  | N  | N  | N  | N  | N  | N  |
+|     add_out_reg     | Flip-flop |  24   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'memory' instantiated from design 'seqMemory_b12_SIZE32' with
+	the parameters "12,32,5". (HDL-193)
+
+Inferred memory devices in process
+	in routine memory_b12_SIZE32_LOGSIZE5 line 99 in file
+		'./test.sv'.
+===================================================================================
+|      Register Name      |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===================================================================================
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+|      data_out_reg       | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+| data_out_tri_enable_reg | Flip-flop |  12   |  Y  | N  | N  | N  | N  | N  | N  |
+===================================================================================
+
+Inferred tri-state devices in process
+	in routine memory_b12_SIZE32_LOGSIZE5 line 99 in file
+		'./test.sv'.
+=================================================
+| Register Name |       Type       | Width | MB |
+=================================================
+| data_out_tri  | Tri-State Buffer |  12   | N  |
+=================================================
+Statistics for MUX_OPs
+=========================================================================
+|        block name/line         | Inputs | Outputs | # sel inputs | MB |
+=========================================================================
+| memory_b12_SIZE32_LOGSIZE5/105 |   32   |   12    |      5       | N  |
+=========================================================================
+Presto compilation completed successfully.
+Information: Building the design 'increaser' instantiated from design 'seqMemory_b12_SIZE32' with
+	the parameters "5,31". (HDL-193)
+
+Inferred memory devices in process
+	in routine increaser_b5_TOP31 line 65 in file
+		'./test.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       out_reg       | Flip-flop |   5   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'memory' instantiated from design 'seqMemory_b24_SIZE1' with
+	the parameters "24,1,1". (HDL-193)
+
+Inferred memory devices in process
+	in routine memory_b24_SIZE1_LOGSIZE1 line 99 in file
+		'./test.sv'.
+===================================================================================
+|      Register Name      |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===================================================================================
+|         mem_reg         | Flip-flop |  24   |  Y  | N  | N  | N  | N  | N  | N  |
+|      data_out_reg       | Flip-flop |  24   |  Y  | N  | N  | N  | N  | N  | N  |
+| data_out_tri_enable_reg | Flip-flop |  24   |  Y  | N  | N  | N  | N  | N  | N  |
+===================================================================================
+
+Inferred tri-state devices in process
+	in routine memory_b24_SIZE1_LOGSIZE1 line 99 in file
+		'./test.sv'.
+=================================================
+| Register Name |       Type       | Width | MB |
+=================================================
+| data_out_tri  | Tri-State Buffer |  24   | N  |
+=================================================
+Presto compilation completed successfully.
+Information: Building the design 'increaser' instantiated from design 'seqMemory_b24_SIZE1' with
+	the parameters "1,0". (HDL-193)
+
+Inferred memory devices in process
+	in routine increaser_b1_TOP0 line 65 in file
+		'./test.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       out_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+1
+###### CLOCKS AND PORTS #######
+set CLK_PORT [get_ports $CLK_NAME]
+{clk}
+set TMP1 [remove_from_collection [all_inputs] $CLK_PORT]
+{reset loadMatrix loadVector start data_in[11] data_in[10] data_in[9] data_in[8] data_in[7] data_in[6] data_in[5] data_in[4] data_in[3] data_in[2] data_in[1] data_in[0]}
+set INPUTS [remove_from_collection $TMP1 $RST_NAME]
+{loadMatrix loadVector start data_in[11] data_in[10] data_in[9] data_in[8] data_in[7] data_in[6] data_in[5] data_in[4] data_in[3] data_in[2] data_in[1] data_in[0]}
+create_clock -period $CLK_PERIOD [get_ports clk]
+1
+#set_input_delay 1 -max -clock clk $INPUTS
+#set_output_delay 1 -max -clock clk [all_outputs]
+# rule of thumb: 20% of clock period
+###### OPTIMIZATION #######
+set_max_area 0 
+1
+###### RUN #####
+compile
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | J-2014.09-DWBB_201409.5.2 |   *     |
+| Licensed DW Building Blocks        | J-2014.09-DWBB_201409.5.2 |   *     |
+============================================================================
+
+
+Information: There are 921 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'mac_b12_g1_0'
+  Processing 'increaser_b1_TOP0_0'
+  Processing 'memory_b24_SIZE1_LOGSIZE1_0'
+  Processing 'seqMemory_b24_SIZE1_0'
+  Processing 'increaser_b5_TOP31_0'
+  Processing 'memory_b12_SIZE32_LOGSIZE5_0'
+  Processing 'seqMemory_b12_SIZE32_0'
+  Processing 'singlepath_n_row1_n_col32_b12_g1_0'
+Information: The register 'state_reg[3]' is a constant and will be removed. (OPT-1206)
+Information: The register 'state_reg[4]' is a constant and will be removed. (OPT-1206)
+Information: The register 'state_reg[5]' is a constant and will be removed. (OPT-1206)
+  Processing 'increaser_b6_TOP32'
+  Processing 'multipath_k32_p32_b12_g1'
+  Processing 'mvm_32_32_12_1'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'mac_b12_g1_1_DW01_add_0'
+  Processing 'increaser_b5_TOP31_1_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_2_DW01_inc_0'
+  Processing 'mac_b12_g1_2_DW01_add_0'
+  Processing 'increaser_b5_TOP31_3_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_4_DW01_inc_0'
+  Processing 'mac_b12_g1_3_DW01_add_0'
+  Processing 'increaser_b5_TOP31_5_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_6_DW01_inc_0'
+  Processing 'mac_b12_g1_4_DW01_add_0'
+  Processing 'increaser_b5_TOP31_7_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_8_DW01_inc_0'
+  Processing 'mac_b12_g1_5_DW01_add_0'
+  Processing 'increaser_b5_TOP31_9_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_10_DW01_inc_0'
+  Processing 'mac_b12_g1_6_DW01_add_0'
+  Processing 'increaser_b5_TOP31_11_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_12_DW01_inc_0'
+  Processing 'mac_b12_g1_7_DW01_add_0'
+  Processing 'increaser_b5_TOP31_13_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_14_DW01_inc_0'
+  Processing 'mac_b12_g1_8_DW01_add_0'
+  Processing 'increaser_b5_TOP31_15_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_16_DW01_inc_0'
+  Processing 'mac_b12_g1_9_DW01_add_0'
+  Processing 'increaser_b5_TOP31_17_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_18_DW01_inc_0'
+  Processing 'mac_b12_g1_10_DW01_add_0'
+  Processing 'increaser_b5_TOP31_19_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_20_DW01_inc_0'
+  Processing 'mac_b12_g1_11_DW01_add_0'
+  Processing 'increaser_b5_TOP31_21_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_22_DW01_inc_0'
+  Processing 'mac_b12_g1_12_DW01_add_0'
+  Processing 'increaser_b5_TOP31_23_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_24_DW01_inc_0'
+  Processing 'mac_b12_g1_13_DW01_add_0'
+  Processing 'increaser_b5_TOP31_25_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_26_DW01_inc_0'
+  Processing 'mac_b12_g1_14_DW01_add_0'
+  Processing 'increaser_b5_TOP31_27_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_28_DW01_inc_0'
+  Processing 'mac_b12_g1_15_DW01_add_0'
+  Processing 'increaser_b5_TOP31_29_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_30_DW01_inc_0'
+  Processing 'mac_b12_g1_16_DW01_add_0'
+  Processing 'increaser_b5_TOP31_31_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_32_DW01_inc_0'
+  Processing 'mac_b12_g1_17_DW01_add_0'
+  Processing 'increaser_b5_TOP31_33_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_34_DW01_inc_0'
+  Processing 'mac_b12_g1_18_DW01_add_0'
+  Processing 'increaser_b5_TOP31_35_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_36_DW01_inc_0'
+  Processing 'mac_b12_g1_19_DW01_add_0'
+  Processing 'increaser_b5_TOP31_37_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_38_DW01_inc_0'
+  Processing 'mac_b12_g1_20_DW01_add_0'
+  Processing 'increaser_b5_TOP31_39_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_40_DW01_inc_0'
+  Processing 'mac_b12_g1_21_DW01_add_0'
+  Processing 'increaser_b5_TOP31_41_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_42_DW01_inc_0'
+  Processing 'mac_b12_g1_22_DW01_add_0'
+  Processing 'increaser_b5_TOP31_43_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_44_DW01_inc_0'
+  Processing 'mac_b12_g1_23_DW01_add_0'
+  Processing 'increaser_b5_TOP31_45_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_46_DW01_inc_0'
+  Processing 'mac_b12_g1_24_DW01_add_0'
+  Processing 'increaser_b5_TOP31_47_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_48_DW01_inc_0'
+  Processing 'mac_b12_g1_25_DW01_add_0'
+  Processing 'increaser_b5_TOP31_49_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_50_DW01_inc_0'
+  Processing 'mac_b12_g1_26_DW01_add_0'
+  Processing 'increaser_b5_TOP31_51_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_52_DW01_inc_0'
+  Processing 'mac_b12_g1_27_DW01_add_0'
+  Processing 'increaser_b5_TOP31_53_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_54_DW01_inc_0'
+  Processing 'mac_b12_g1_28_DW01_add_0'
+  Processing 'increaser_b5_TOP31_55_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_56_DW01_inc_0'
+  Processing 'mac_b12_g1_29_DW01_add_0'
+  Processing 'increaser_b5_TOP31_57_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_58_DW01_inc_0'
+  Processing 'mac_b12_g1_30_DW01_add_0'
+  Processing 'increaser_b5_TOP31_59_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_60_DW01_inc_0'
+  Processing 'mac_b12_g1_31_DW01_add_0'
+  Processing 'increaser_b5_TOP31_61_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_62_DW01_inc_0'
+  Processing 'mac_b12_g1_0_DW01_add_0'
+  Processing 'increaser_b5_TOP31_63_DW01_inc_0'
+  Processing 'increaser_b5_TOP31_0_DW01_inc_0'
+  Processing 'increaser_b6_TOP32_DW01_inc_0'
+  Mapping 'mac_b12_g1_1_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_2_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_3_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_4_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_5_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_6_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_7_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_8_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_9_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_10_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_11_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_12_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_13_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_14_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_15_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_16_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_17_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_18_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_19_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_20_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_21_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_22_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_23_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_24_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_25_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_26_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_27_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_28_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_29_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_30_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_31_DW_mult_tc_0'
+  Mapping 'mac_b12_g1_0_DW_mult_tc_0'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+  Mapping Optimization (Phase 1)
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:59  308648.0      1.31   28071.9   58864.3                          
+    0:00:59  308648.0      1.31   28071.9   58864.3                          
+    0:01:00  309249.7      1.31   28065.0   58444.8                          
+    0:01:00  309843.4      1.31   28058.1   58025.3                          
+    0:01:00  310437.2      1.31   28051.2   57605.8                          
+    0:01:01  311030.9      1.31   28044.3   57186.3                          
+    0:01:01  311624.6      1.31   28037.4   56766.8                          
+    0:01:02  312218.3      1.31   28030.5   56347.3                          
+    0:01:02  312800.6      1.31   21592.2   43388.2                          
+    0:01:03  313393.2      1.31   14715.8   29814.7                          
+    0:01:04  313990.4      1.31    7839.4   16150.9                          
+    0:01:04  314572.9      1.31    1394.9    2977.0                          
+    0:01:29  310132.3      0.53     337.1       0.0                          
+    0:01:29  310132.3      0.53     337.1       0.0                          
+    0:01:29  310132.3      0.53     337.1       0.0                          
+    0:01:30  310132.1      0.53     337.1       0.0                          
+    0:01:30  310132.1      0.53     337.1       0.0                          
+    0:01:31  310132.1      0.53     337.1       0.0                          
+    0:01:59  260648.3      0.52     218.0       0.0                          
+    0:02:03  260433.7      0.52     217.4       0.0                          
+    0:02:05  260432.3      0.52     217.3       0.0                          
+    0:02:12  260433.7      0.52     217.0       0.0                          
+    0:02:14  260434.5      0.52     216.5       0.0                          
+    0:02:15  260435.8      0.52     216.4       0.0                          
+    0:02:16  260436.6      0.52     216.1       0.0                          
+    0:02:17  260437.9      0.51     215.7       0.0                          
+    0:02:19  260439.0      0.51     215.5       0.0                          
+    0:02:20  260440.3      0.50     215.1       0.0                          
+    0:02:21  260444.1      0.50     214.6       0.0                          
+    0:02:21  260445.6      0.50     214.1       0.0                          
+    0:02:22  260449.4      0.50     213.5       0.0                          
+    0:02:23  260453.1      0.50     213.0       0.0                          
+    0:02:23  260456.8      0.50     212.4       0.0                          
+    0:02:24  260460.5      0.50     211.9       0.0                          
+    0:02:24  260464.3      0.49     211.3       0.0                          
+    0:02:25  260465.6      0.49     210.8       0.0                          
+    0:02:26  260466.4      0.48     209.5       0.0                          
+    0:02:27  260466.1      0.48     209.5       0.0                          
+    0:02:27  260466.1      0.48     209.5       0.0                          
+    0:02:27  260466.1      0.48     209.5       0.0                          
+    0:02:27  260466.1      0.48     209.5       0.0                          
+    0:02:27  260466.1      0.48     209.5       0.0                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:02:27  260466.1      0.48     209.5       0.0                          
+    0:02:27  260500.4      0.45     204.4       0.0 path/genblk1[27].path/path/genblk1.add_in_reg[18]/D
+    0:02:28  260517.5      0.44     202.2       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[19]/D
+    0:02:28  260524.1      0.44     201.1       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[18]/D
+    0:02:28  260532.1      0.44     200.2       0.0 path/genblk1[22].path/path/genblk1.add_in_reg[17]/D
+    0:02:28  260534.8      0.44     200.1       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[18]/D
+    0:02:28  260535.8      0.44     200.1       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[17]/D
+    0:02:28  260541.1      0.44     199.1       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[21]/D
+    0:02:28  260545.7      0.44     198.5       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[18]/D
+    0:02:28  260552.8      0.44     198.5       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[22]/D
+    0:02:28  260557.4      0.43     197.3       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[20]/D
+    0:02:28  260563.8      0.43     196.6       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[17]/D
+    0:02:28  260563.2      0.43     194.9       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[17]/D
+    0:02:28  260563.5      0.43     194.3       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[17]/D
+    0:02:29  260564.0      0.43     193.6       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[17]/D
+    0:02:29  260567.2      0.42     192.3       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[18]/D
+    0:02:29  260576.8      0.42     191.8       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[20]/D
+    0:02:29  260581.3      0.42     191.4       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[17]/D
+    0:02:29  260586.9      0.42     190.8       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[17]/D
+    0:02:29  260599.9      0.42     189.8       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[19]/D
+    0:02:29  260608.7      0.41     188.6       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[17]/D
+    0:02:29  260620.4      0.41     188.0       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[17]/D
+    0:02:29  260629.7      0.41     186.8       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[20]/D
+    0:02:29  260631.8      0.41     186.8       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[21]/D
+    0:02:29  260636.4      0.41     186.5       0.0 path/genblk1[18].path/path/genblk1.add_in_reg[17]/D
+    0:02:29  260643.6      0.40     185.7       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[19]/D
+    0:02:30  260650.5      0.40     185.4       0.0 path/genblk1[22].path/path/genblk1.add_in_reg[17]/D
+    0:02:30  260653.1      0.40     185.2       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[21]/D
+    0:02:30  260656.1      0.40     185.1       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[19]/D
+    0:02:30  260662.4      0.40     184.5       0.0 path/genblk1[22].path/path/genblk1.add_in_reg[17]/D
+    0:02:30  260667.5      0.40     184.1       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[15]/D
+    0:02:30  260674.7      0.40     183.9       0.0 path/genblk1[27].path/path/genblk1.add_in_reg[20]/D
+    0:02:30  260685.3      0.40     183.1       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[17]/D
+    0:02:30  260688.2      0.40     182.1       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[18]/D
+    0:02:30  260690.1      0.40     181.8       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[20]/D
+    0:02:30  260696.8      0.40     181.1       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[17]/D
+    0:02:30  260706.1      0.40     180.0       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[18]/D
+    0:02:30  260709.8      0.40     179.7       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[17]/D
+    0:02:31  260714.0      0.40     178.8       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[20]/D
+    0:02:31  260719.4      0.39     178.1       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[17]/D
+    0:02:31  260721.0      0.39     177.6       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[17]/D
+    0:02:31  260727.9      0.39     176.8       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[17]/D
+    0:02:31  260739.3      0.39     176.4       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[17]/D
+    0:02:31  260742.0      0.39     175.9       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[18]/D
+    0:02:31  260745.2      0.39     175.7       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[18]/D
+    0:02:31  260751.0      0.39     175.2       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[21]/D
+    0:02:31  260757.9      0.39     174.8       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[19]/D
+    0:02:31  260759.0      0.39     174.3       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[15]/D
+    0:02:31  260761.7      0.38     172.7       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[17]/D
+    0:02:31  260767.5      0.38     172.3       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[21]/D
+    0:02:32  260771.8      0.38     172.0       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[20]/D
+    0:02:32  260775.2      0.38     171.8       0.0 path/genblk1[22].path/path/genblk1.add_in_reg[21]/D
+    0:02:32  260777.6      0.38     171.5       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[20]/D
+    0:02:32  260783.7      0.38     170.5       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[20]/D
+    0:02:32  260783.7      0.38     170.0       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[17]/D
+    0:02:32  260789.9      0.38     168.8       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[17]/D
+    0:02:32  260793.3      0.38     168.7       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[17]/D
+    0:02:32  260794.4      0.37     167.9       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[19]/D
+    0:02:32  260796.8      0.37     167.7       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[18]/D
+    0:02:32  260803.4      0.37     167.6       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[18]/D
+    0:02:32  260807.4      0.37     166.8       0.0 path/genblk1[4].path/path/genblk1.add_in_reg[19]/D
+    0:02:32  260813.8      0.37     166.3       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[17]/D
+    0:02:32  260817.0      0.37     166.0       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[21]/D
+    0:02:33  260819.6      0.37     166.0       0.0 path/genblk1[31].path/path/genblk1.add_in_reg[20]/D
+    0:02:33  260822.0      0.37     165.5       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[17]/D
+    0:02:33  260823.6      0.37     165.1       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[21]/D
+    0:02:33  260826.6      0.37     164.5       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[17]/D
+    0:02:33  260833.5      0.36     164.0       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[19]/D
+    0:02:33  260836.1      0.36     163.9       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[22]/D
+    0:02:33  260838.8      0.36     163.4       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[19]/D
+    0:02:33  260842.0      0.36     163.3       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[21]/D
+    0:02:33  260843.6      0.36     162.7       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[17]/D
+    0:02:33  260845.4      0.36     162.4       0.0 path/genblk1[31].path/path/genblk1.add_in_reg[21]/D
+    0:02:33  260847.8      0.36     162.2       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[19]/D
+    0:02:33  260854.5      0.36     161.7       0.0 path/genblk1[22].path/path/genblk1.add_in_reg[19]/D
+    0:02:33  260856.9      0.36     161.1       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[17]/D
+    0:02:33  260858.2      0.36     160.6       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[20]/D
+    0:02:34  260867.0      0.36     160.2       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[22]/D
+    0:02:34  260874.7      0.36     159.4       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[19]/D
+    0:02:34  260880.0      0.35     159.0       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[20]/D
+    0:02:34  260882.4      0.35     158.6       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[18]/D
+    0:02:34  260885.3      0.35     158.2       0.0 path/genblk1[27].path/path/genblk1.add_in_reg[19]/D
+    0:02:34  260889.6      0.35     158.0       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[19]/D
+    0:02:34  260896.0      0.35     157.8       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[21]/D
+    0:02:34  260904.0      0.35     157.3       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[21]/D
+    0:02:34  260909.8      0.35     156.8       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[17]/D
+    0:02:34  260912.7      0.35     156.3       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[17]/D
+    0:02:34  260918.3      0.35     155.2       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[19]/D
+    0:02:34  260922.6      0.35     154.8       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[21]/D
+    0:02:35  260931.6      0.35     154.4       0.0 path/genblk1[7].path/path/genblk1.add_in_reg[20]/D
+    0:02:35  260933.5      0.35     154.0       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[17]/D
+    0:02:35  260936.7      0.34     153.9       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[19]/D
+    0:02:35  260938.8      0.34     153.7       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[21]/D
+    0:02:35  260946.5      0.34     153.6       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[21]/D
+    0:02:35  260952.6      0.34     152.9       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[21]/D
+    0:02:35  260953.7      0.34     152.8       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[19]/D
+    0:02:35  260955.3      0.34     152.5       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[21]/D
+    0:02:35  260961.2      0.34     152.1       0.0 path/genblk1[7].path/path/genblk1.add_in_reg[17]/D
+    0:02:35  260962.5      0.34     151.9       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[17]/D
+    0:02:35  260963.6      0.34     151.7       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[17]/D
+    0:02:35  260973.7      0.34     151.3       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[19]/D
+    0:02:35  260981.9      0.34     151.1       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[18]/D
+    0:02:36  260985.4      0.34     151.0       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[21]/D
+    0:02:36  260989.6      0.34     150.9       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[18]/D
+    0:02:36  260996.3      0.34     150.6       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[22]/D
+    0:02:36  260998.9      0.34     150.5       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[21]/D
+    0:02:36  261001.3      0.34     150.3       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[17]/D
+    0:02:36  261004.5      0.34     150.2       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[19]/D
+    0:02:36  261009.3      0.34     149.9       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[15]/D
+    0:02:36  261015.7      0.33     149.4       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[21]/D
+    0:02:36  261022.1      0.33     148.5       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[15]/D
+    0:02:36  261025.3      0.33     148.2       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[19]/D
+    0:02:36  261029.3      0.33     148.2       0.0 path/genblk1[22].path/path/genblk1.add_in_reg[19]/D
+    0:02:36  261032.7      0.33     148.0       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[21]/D
+    0:02:36  261040.7      0.33     147.8       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[21]/D
+    0:02:37  261047.1      0.33     147.7       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[19]/D
+    0:02:37  261051.3      0.33     147.7       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[17]/D
+    0:02:37  261053.2      0.33     147.5       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[19]/D
+    0:02:37  261056.7      0.33     147.3       0.0 path/genblk1[31].path/path/genblk1.add_in_reg[21]/D
+    0:02:37  261058.5      0.33     146.9       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[21]/D
+    0:02:37  261061.2      0.33     146.8       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[20]/D
+    0:02:37  261067.3      0.33     146.6       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[21]/D
+    0:02:37  261067.0      0.33     146.6       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[19]/D
+    0:02:37  261073.9      0.33     146.5       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[17]/D
+    0:02:37  261079.0      0.33     146.4       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[17]/D
+    0:02:37  261087.8      0.33     146.2       0.0 path/path/path/genblk1.add_in_reg[20]/D
+    0:02:37  261089.9      0.33     146.0       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[18]/D
+    0:02:37  261091.5      0.33     145.8       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[20]/D
+    0:02:37  261100.3      0.33     145.7       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[20]/D
+    0:02:37  261108.8      0.33     145.6       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[18]/D
+    0:02:38  261115.7      0.32     145.5       0.0 path/genblk1[4].path/path/genblk1.add_in_reg[17]/D
+    0:02:38  261118.1      0.32     145.4       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[19]/D
+    0:02:38  261123.7      0.32     145.3       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[19]/D
+    0:02:38  261129.3      0.32     145.2       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[21]/D
+    0:02:38  261138.0      0.32     145.1       0.0 path/genblk1[7].path/path/genblk1.add_in_reg[17]/D
+    0:02:38  261146.8      0.32     144.8       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[19]/D
+    0:02:38  261153.5      0.32     144.4       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[19]/D
+    0:02:38  261161.2      0.32     144.1       0.0 path/genblk1[22].path/path/genblk1.add_in_reg[19]/D
+    0:02:38  261164.9      0.32     144.1       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[17]/D
+    0:02:38  261172.4      0.32     144.0       0.0 path/genblk1[27].path/path/genblk1.add_in_reg[22]/D
+    0:02:38  261176.6      0.32     144.0       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[17]/D
+    0:02:38  261180.3      0.32     143.9       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[20]/D
+    0:02:38  261182.7      0.32     143.8       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[17]/D
+    0:02:38  261187.0      0.32     143.7       0.0 path/genblk1[18].path/path/genblk1.add_in_reg[18]/D
+    0:02:39  261188.1      0.32     143.4       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[19]/D
+    0:02:39  261194.7      0.32     143.2       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[17]/D
+    0:02:39  261200.6      0.32     143.1       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[20]/D
+    0:02:39  261205.9      0.32     143.0       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[17]/D
+    0:02:39  261212.3      0.32     142.9       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[20]/D
+    0:02:39  261216.0      0.32     142.7       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[18]/D
+    0:02:39  261218.1      0.32     142.6       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[18]/D
+    0:02:39  261227.2      0.32     142.6       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[17]/D
+    0:02:39  261230.9      0.32     142.4       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[18]/D
+    0:02:39  261239.1      0.32     142.1       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[19]/D
+    0:02:39  261248.4      0.32     141.9       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[21]/D
+    0:02:39  261256.4      0.32     141.8       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[18]/D
+    0:02:39  261260.7      0.32     141.5       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[21]/D
+    0:02:39  261267.3      0.31     141.4       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[21]/D
+    0:02:40  261273.2      0.31     141.5       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[18]/D
+    0:02:40  261281.2      0.31     141.4       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[17]/D
+    0:02:40  261291.5      0.31     141.4       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[21]/D
+    0:02:40  261296.8      0.31     141.2       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[18]/D
+    0:02:40  261301.6      0.31     140.9       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[18]/D
+    0:02:40  261314.4      0.31     140.8       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[16]/D
+    0:02:40  261320.3      0.31     140.8       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[18]/D
+    0:02:40  261326.6      0.31     140.6       0.0 path/genblk1[27].path/path/genblk1.add_in_reg[21]/D
+    0:02:40  261334.6      0.31     140.2       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[19]/D
+    0:02:40  261341.3      0.31     140.1       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[18]/D
+    0:02:40  261344.5      0.31     139.9       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[18]/D
+    0:02:40  261356.2      0.31     139.9       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[18]/D
+    0:02:40  261361.5      0.31     139.8       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[18]/D
+    0:02:40  261363.6      0.31     139.7       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[15]/D
+    0:02:40  261374.8      0.31     139.7       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[18]/D
+    0:02:41  261377.7      0.31     139.6       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[18]/D
+    0:02:41  261380.6      0.31     139.6       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[21]/D
+    0:02:41  261386.2      0.31     139.4       0.0 path/path/path/genblk1.add_in_reg[17]/D
+    0:02:41  261391.5      0.31     139.4       0.0 path/path/path/genblk1.add_in_reg[17]/D
+    0:02:41  261402.2      0.31     139.2       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[18]/D
+    0:02:41  261408.0      0.31     139.1       0.0 path/genblk1[18].path/path/genblk1.add_in_reg[21]/D
+    0:02:41  261419.2      0.31     138.9       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[19]/D
+    0:02:41  261421.3      0.31     138.7       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[18]/D
+    0:02:41  261432.5      0.30     138.7       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[21]/D
+    0:02:41  261437.0      0.30     138.5       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[21]/D
+    0:02:41  261445.5      0.30     138.4       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[16]/D
+    0:02:41  261452.2      0.30     138.4       0.0 path/genblk1[7].path/path/genblk1.add_in_reg[19]/D
+    0:02:41  261454.9      0.30     138.3       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[21]/D
+    0:02:41  261463.1      0.30     138.1       0.0 path/genblk1[4].path/path/genblk1.add_in_reg[21]/D
+    0:02:41  261468.7      0.30     137.9       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[22]/D
+    0:02:41  261471.9      0.30     137.7       0.0 path/path/path/genblk1.add_in_reg[17]/D
+    0:02:42  261480.9      0.30     137.6       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[18]/D
+    0:02:42  261485.7      0.30     137.5       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[18]/D
+    0:02:42  261492.6      0.30     137.4       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[15]/D
+    0:02:42  261492.9      0.30     137.3       0.0 path/genblk1[4].path/path/genblk1.add_in_reg[21]/D
+    0:02:42  261500.1      0.30     137.2       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[18]/D
+    0:02:42  261506.7      0.30     137.1       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[19]/D
+    0:02:42  261512.8      0.30     137.0       0.0 path/genblk1[7].path/path/genblk1.add_in_reg[19]/D
+    0:02:42  261517.1      0.30     137.0       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[21]/D
+    0:02:42  261521.4      0.30     136.9       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[21]/D
+    0:02:42  261524.3      0.30     136.8       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[18]/D
+    0:02:42  261532.0      0.30     136.7       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[18]/D
+    0:02:42  261535.7      0.30     136.6       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[21]/D
+    0:02:42  261538.6      0.30     136.4       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[18]/D
+    0:02:42  261543.2      0.30     136.3       0.0 path/path/path/genblk1.add_in_reg[17]/D
+    0:02:42  261547.7      0.30     136.4       0.0 path/genblk1[4].path/path/genblk1.add_in_reg[21]/D
+    0:02:42  261550.9      0.30     136.3       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[21]/D
+    0:02:43  261555.9      0.30     136.3       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[21]/D
+    0:02:43  261560.5      0.30     136.3       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:02:43  261563.9      0.30     136.2       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[21]/D
+    0:02:43  261565.0      0.30     136.1       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[20]/D
+    0:02:43  261568.7      0.30     136.1       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[21]/D
+    0:02:43  261574.6      0.30     136.1       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[22]/D
+    0:02:43  261578.8      0.30     136.0       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[19]/D
+    0:02:43  261579.9      0.30     136.0       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[18]/D
+    0:02:43  261580.9      0.30     136.0       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[17]/D
+    0:02:43  261585.7      0.30     135.9       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[21]/D
+    0:02:43  261586.5      0.30     135.9       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[16]/D
+    0:02:43  261591.3      0.30     135.8       0.0 path/genblk1[18].path/path/genblk1.add_in_reg[18]/D
+    0:02:43  261594.0      0.30     135.7       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[21]/D
+    0:02:43  261596.1      0.30     135.7       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[18]/D
+    0:02:43  261596.6      0.30     135.7       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[18]/D
+    0:02:44  261603.8      0.30     135.6       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[21]/D
+    0:02:44  261604.1      0.30     135.6       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[18]/D
+    0:02:44  261610.5      0.30     135.5       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[21]/D
+    0:02:44  261611.5      0.30     135.5       0.0 path/genblk1[4].path/path/genblk1.add_in_reg[21]/D
+    0:02:44  261613.7      0.30     135.4       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[18]/D
+    0:02:44  261619.5      0.30     135.4       0.0 path/genblk1[31].path/path/genblk1.add_in_reg[15]/D
+    0:02:44  261623.8      0.30     135.4       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[21]/D
+    0:02:44  261630.7      0.30     135.3       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[21]/D
+    0:02:44  261634.7      0.30     135.0       0.0 path/genblk1[18].path/path/genblk1.add_in_reg[18]/D
+    0:02:44  261638.9      0.29     134.9       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[21]/D
+    0:02:44  261645.0      0.29     134.8       0.0 path/genblk1[7].path/path/genblk1.add_in_reg[22]/D
+    0:02:44  261647.7      0.29     134.7       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[21]/D
+    0:02:44  261653.8      0.29     134.6       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[19]/D
+    0:02:44  261654.9      0.29     134.6       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[19]/D
+    0:02:45  261664.2      0.29     134.5       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[21]/D
+    0:02:45  261665.5      0.29     134.5       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[22]/D
+    0:02:45  261669.0      0.29     134.5       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[21]/D
+    0:02:45  261671.4      0.29     134.4       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[18]/D
+    0:02:45  261671.4      0.29     134.4       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[21]/D
+    0:02:45  261677.0      0.29     134.2       0.0 path/path/path/genblk1.add_in_reg[21]/D
+    0:02:45  261677.8      0.29     134.2       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[21]/D
+    0:02:45  261682.5      0.29     134.2       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[22]/D
+    0:02:45  261687.1      0.29     134.1       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:02:45  261690.3      0.29     134.0       0.0 path/genblk1[4].path/path/genblk1.add_in_reg[15]/D
+    0:02:45  261695.3      0.29     134.0       0.0 path/genblk1[22].path/path/genblk1.add_in_reg[21]/D
+    0:02:45  261699.0      0.29     134.0       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[22]/D
+    0:02:45  261700.4      0.29     133.9       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[21]/D
+    0:02:45  261699.8      0.29     133.9       0.0 path/path/path/genblk1.add_in_reg[21]/D
+    0:02:45  261701.2      0.29     133.7       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[21]/D
+    0:02:45  261701.7      0.29     133.7       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[21]/D
+    0:02:46  261703.8      0.29     133.7       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[21]/D
+    0:02:46  261708.1      0.29     133.6       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[18]/D
+    0:02:46  261711.3      0.29     133.5       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[18]/D
+    0:02:46  261715.3      0.29     133.4       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[21]/D
+    0:02:46  261723.0      0.29     133.3       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[19]/D
+    0:02:46  261727.5      0.29     133.2       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[21]/D
+    0:02:46  261730.7      0.29     133.2       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[21]/D
+    0:02:46  261733.4      0.29     133.2       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[19]/D
+    0:02:46  261736.8      0.29     133.1       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[15]/D
+    0:02:46  261738.4      0.29     133.1       0.0 path/genblk1[18].path/path/genblk1.add_in_reg[18]/D
+    0:02:46  261741.6      0.29     133.0       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[21]/D
+    0:02:46  261743.7      0.29     133.0       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[18]/D
+    0:02:46  261750.9      0.29     132.9       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[15]/D
+    0:02:46  261753.3      0.29     132.8       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[22]/D
+    0:02:46  261754.4      0.29     132.8       0.0 path/genblk1[4].path/path/genblk1.add_in_reg[21]/D
+    0:02:46  261760.5      0.29     132.6       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[21]/D
+    0:02:47  261761.8      0.29     132.5       0.0 path/genblk1[31].path/path/genblk1.add_in_reg[15]/D
+    0:02:47  261764.2      0.29     132.4       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[21]/D
+    0:02:47  261769.5      0.29     132.2       0.0 path/genblk1[18].path/path/genblk1.add_in_reg[21]/D
+    0:02:47  261778.6      0.29     132.1       0.0 path/genblk1[27].path/path/genblk1.add_in_reg[19]/D
+    0:02:47  261784.2      0.29     132.0       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[21]/D
+    0:02:47  261789.2      0.29     131.9       0.0 path/genblk1[18].path/path/genblk1.add_in_reg[18]/D
+    0:02:47  261795.1      0.29     131.8       0.0 path/genblk1[31].path/path/genblk1.add_in_reg[21]/D
+    0:02:47  261798.0      0.29     131.8       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[19]/D
+    0:02:47  261802.0      0.29     131.8       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[20]/D
+    0:02:47  261806.5      0.29     131.8       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[19]/D
+    0:02:47  261807.6      0.29     131.7       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[22]/D
+    0:02:47  261809.2      0.29     131.8       0.0 path/genblk1[31].path/path/genblk1.add_in_reg[21]/D
+    0:02:47  261812.9      0.29     131.8       0.0 path/genblk1[4].path/path/genblk1.add_in_reg[21]/D
+    0:02:47  261815.5      0.29     131.7       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[21]/D
+    0:02:47  261819.0      0.29     131.7       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[20]/D
+    0:02:47  261822.5      0.29     131.6       0.0 path/genblk1[4].path/path/genblk1.add_in_reg[21]/D
+    0:02:48  261826.5      0.29     131.6       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[20]/D
+    0:02:48  261828.1      0.29     131.6       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[17]/D
+    0:02:48  261834.4      0.29     131.5       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[21]/D
+    0:02:48  261839.0      0.29     131.5       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[17]/D
+    0:02:48  261836.0      0.29     131.4       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[21]/D
+    0:02:48  261837.9      0.29     131.4       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[21]/D
+    0:02:48  261839.8      0.29     131.4       0.0 path/genblk1[7].path/path/genblk1.add_in_reg[22]/D
+    0:02:48  261841.9      0.29     131.4       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[21]/D
+    0:02:48  261843.5      0.29     131.4       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[19]/D
+    0:02:48  261844.3      0.29     131.3       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[21]/D
+    0:02:48  261847.7      0.29     131.3       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[22]/D
+    0:02:48  261849.1      0.29     131.3       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[21]/D
+    0:02:48  261852.5      0.29     131.1       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[16]/D
+    0:02:48  261855.7      0.29     131.1       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[17]/D
+    0:02:48  261858.4      0.29     131.0       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[19]/D
+    0:02:49  261857.6      0.29     130.9       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[16]/D
+    0:02:49  261856.8      0.29     130.9       0.0                          
+    0:02:50  261838.2      0.29     130.9       0.0                          
+    0:02:50  261838.2      0.29     130.9       0.0                          
+    0:02:50  261840.8      0.29     130.8       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[19]/D
+    0:02:50  261837.9      0.29     130.8       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[21]/D
+    0:02:50  261844.5      0.29     130.8       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[21]/D
+    0:02:50  261845.6      0.28     130.7       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:02:50  261845.6      0.28     130.7       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[15]/D
+    0:02:51  261847.2      0.28     130.7       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[21]/D
+    0:02:51  261849.3      0.28     130.6       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[16]/D
+    0:02:51  261853.6      0.28     130.5       0.0 path/genblk1[27].path/path/genblk1.add_in_reg[19]/D
+    0:02:51  261858.1      0.28     130.4       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[21]/D
+    0:02:51  261859.7      0.28     130.3       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[22]/D
+    0:02:51  261864.2      0.28     130.2       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[19]/D
+    0:02:51  261868.5      0.28     130.1       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:02:51  261879.7      0.28     130.0       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[22]/D
+    0:02:51  261884.2      0.28     130.0       0.0 path/genblk1[7].path/path/genblk1.add_in_reg[21]/D
+    0:02:51  261889.8      0.28     129.9       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[22]/D
+    0:02:51  261891.4      0.28     129.9       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[15]/D
+    0:02:51  261892.7      0.28     129.9       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[20]/D
+    0:02:51  261896.7      0.28     129.7       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[21]/D
+    0:02:51  261898.3      0.28     129.7       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:02:51  261898.8      0.28     129.6       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[17]/D
+    0:02:51  261900.4      0.28     129.6       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[17]/D
+    0:02:52  261902.5      0.28     129.6       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:02:52  261904.9      0.28     129.5       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[21]/D
+    0:02:52  261907.3      0.28     129.5       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[19]/D
+    0:02:52  261909.4      0.28     129.4       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[22]/D
+    0:02:52  261912.9      0.28     129.3       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[15]/D
+    0:02:52  261914.2      0.28     129.3       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[22]/D
+    0:02:52  261919.3      0.28     129.3       0.0 path/genblk1[4].path/path/genblk1.add_in_reg[21]/D
+    0:02:52  261923.8      0.28     129.2       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[19]/D
+    0:02:52  261932.1      0.28     129.1       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[18]/D
+    0:02:52  261933.9      0.28     129.1       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[21]/D
+    0:02:52  261936.6      0.28     129.0       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[21]/D
+    0:02:52  261939.2      0.28     129.0       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:02:52  261941.9      0.28     129.0       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[21]/D
+    0:02:53  261944.8      0.28     128.9       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[16]/D
+    0:02:53  261950.7      0.28     128.9       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[16]/D
+    0:02:53  261953.6      0.28     128.8       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[21]/D
+    0:02:53  261955.5      0.28     128.7       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[15]/D
+
+
+  Beginning Area-Recovery Phase  (max_area 0)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:02:53  261955.5      0.28     128.7       0.0                          
+    0:02:54  261955.5      0.28     128.7       0.0                          
+    0:03:00  261480.9      0.28     128.5       0.0                          
+    0:03:02  261262.3      0.28     128.5       0.0                          
+    0:03:04  261225.6      0.28     128.5       0.0                          
+    0:03:04  261224.0      0.28     128.5       0.0                          
+    0:03:04  261222.4      0.28     128.5       0.0                          
+    0:03:04  261222.4      0.28     128.5       0.0                          
+    0:03:06  261222.4      0.28     128.5       0.0                          
+    0:03:06  261139.9      0.29     129.8       0.0                          
+    0:03:06  261138.6      0.29     129.8       0.0                          
+    0:03:06  261138.6      0.29     129.8       0.0                          
+    0:03:06  261138.6      0.29     129.8       0.0                          
+    0:03:07  261138.6      0.29     129.8       0.0                          
+    0:03:07  261138.6      0.29     129.8       0.0                          
+    0:03:07  261138.6      0.29     129.8       0.0                          
+    0:03:07  261143.1      0.29     129.7       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[20]/D
+    0:03:07  261145.0      0.28     129.6       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[19]/D
+    0:03:07  261151.1      0.28     129.5       0.0 path/path/path/genblk1.add_in_reg[21]/D
+    0:03:07  261152.4      0.28     129.4       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[21]/D
+    0:03:07  261155.3      0.28     129.4       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[21]/D
+    0:03:07  261161.7      0.28     129.3       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[21]/D
+    0:03:07  261163.3      0.28     129.1       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[19]/D
+    0:03:07  261168.1      0.28     129.0       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[21]/D
+    0:03:07  261173.2      0.28     128.9       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:03:07  261175.0      0.28     128.9       0.0 path/genblk1[27].path/path/genblk1.add_in_reg[21]/D
+    0:03:08  261177.9      0.28     128.9       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[21]/D
+    0:03:08  261182.2      0.28     128.8       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[21]/D
+    0:03:08  261185.1      0.28     128.7       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[19]/D
+    0:03:08  261187.8      0.28     128.7       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:03:08  261189.9      0.28     128.6       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[21]/D
+    0:03:08  261192.6      0.28     128.6       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:03:08  261197.4      0.28     128.6       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[21]/D
+    0:03:08  261198.4      0.28     128.6       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[19]/D
+    0:03:08  261200.8      0.28     128.6       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[21]/D
+    0:03:08  261206.9      0.28     128.5       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[17]/D
+    0:03:08  261210.9      0.28     128.3       0.0 path/genblk1[31].path/path/genblk1.add_in_reg[15]/D
+    0:03:08  261212.5      0.28     128.2       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[19]/D
+    0:03:08  261213.3      0.28     128.1       0.0 path/genblk1[22].path/path/genblk1.add_in_reg[21]/D
+    0:03:09  261215.2      0.28     128.0       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[17]/D
+    0:03:09  261218.6      0.28     128.0       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[21]/D
+    0:03:09  261222.6      0.28     128.0       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[21]/D
+    0:03:09  261225.3      0.28     127.9       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[21]/D
+    0:03:09  261229.0      0.28     127.9       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[22]/D
+    0:03:09  261233.0      0.28     127.8       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[21]/D
+    0:03:09  261237.3      0.28     127.7       0.0 path/genblk1[27].path/path/genblk1.add_in_reg[21]/D
+    0:03:09  261238.6      0.28     127.6       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[22]/D
+    0:03:09  261240.5      0.28     127.6       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[16]/D
+    0:03:09  261242.6      0.28     127.5       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[21]/D
+    0:03:09  261246.0      0.28     127.5       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[20]/D
+    0:03:09  261252.2      0.28     127.4       0.0 path/genblk1[22].path/path/genblk1.add_in_reg[21]/D
+    0:03:09  261253.0      0.28     127.4       0.0 path/genblk1[31].path/path/genblk1.add_in_reg[21]/D
+    0:03:09  261255.1      0.28     127.4       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[21]/D
+    0:03:09  261262.0      0.28     127.3       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[19]/D
+    0:03:10  261265.7      0.28     127.3       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[15]/D
+    0:03:10  261271.3      0.28     127.2       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[20]/D
+    0:03:10  261271.8      0.28     127.2       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:03:10  261272.4      0.28     127.1       0.0 path/genblk1[31].path/path/genblk1.add_in_reg[21]/D
+    0:03:10  261276.1      0.28     127.1       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[22]/D
+    0:03:10  261277.2      0.28     127.1       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[21]/D
+    0:03:10  261280.1      0.28     127.0       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[18]/D
+    0:03:10  261281.7      0.28     127.0       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[16]/D
+    0:03:10  261283.5      0.28     126.9       0.0 path/genblk1[22].path/path/genblk1.add_in_reg[21]/D
+    0:03:10  261288.9      0.28     126.8       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[16]/D
+    0:03:10  261295.3      0.28     126.8       0.0 path/genblk1[31].path/path/genblk1.add_in_reg[21]/D
+    0:03:10  261300.8      0.28     126.6       0.0 path/genblk1[13].path/path/genblk1.add_in_reg[21]/D
+    0:03:10  261303.8      0.28     126.6       0.0 path/genblk1[10].path/path/genblk1.add_in_reg[16]/D
+    0:03:10  261305.1      0.28     126.6       0.0 path/genblk1[14].path/path/genblk1.add_in_reg[20]/D
+    0:03:11  261306.7      0.28     126.6       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[15]/D
+    0:03:11  261309.9      0.28     126.5       0.0 path/genblk1[18].path/path/genblk1.add_in_reg[21]/D
+    0:03:11  261311.7      0.28     126.4       0.0 path/genblk1[16].path/path/genblk1.add_in_reg[22]/D
+    0:03:11  261317.9      0.28     126.3       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[20]/D
+    0:03:11  261318.7      0.28     126.2       0.0 path/genblk1[3].path/path/genblk1.add_in_reg[21]/D
+    0:03:11  261319.2      0.28     126.2       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[16]/D
+    0:03:11  261319.7      0.28     126.1       0.0                          
+    0:03:18  261292.6      0.28     126.1       0.0                          
+    0:03:20  261189.1      0.28     126.1       0.0                          
+    0:03:20  261078.2      0.28     126.1       0.0                          
+    0:03:20  260967.3      0.28     126.1       0.0                          
+    0:03:21  260854.8      0.28     126.1       0.0                          
+    0:03:21  260743.8      0.28     126.1       0.0                          
+    0:03:22  260632.9      0.28     126.1       0.0                          
+    0:03:22  260522.0      0.28     126.1       0.0                          
+    0:03:23  260411.1      0.28     126.1       0.0                          
+    0:03:23  260300.1      0.28     126.1       0.0                          
+    0:03:24  260189.2      0.28     126.1       0.0                          
+    0:03:24  260078.3      0.28     126.1       0.0                          
+    0:03:25  259998.0      0.28     126.1       0.0                          
+    0:03:25  259975.4      0.28     126.1       0.0                          
+    0:03:25  259951.2      0.28     126.1       0.0                          
+    0:03:25  259914.4      0.28     126.1       0.0                          
+    0:03:26  259881.5      0.28     126.1       0.0                          
+    0:03:26  259858.9      0.28     126.0       0.0                          
+    0:03:26  259838.4      0.28     126.0       0.0                          
+    0:03:26  259812.8      0.28     126.0       0.0                          
+    0:03:26  259790.5      0.28     126.0       0.0                          
+    0:03:27  259762.0      0.28     126.0       0.0                          
+    0:03:27  259736.8      0.28     125.9       0.0                          
+    0:03:27  259707.8      0.28     125.9       0.0                          
+    0:03:27  259680.9      0.28     125.9       0.0                          
+    0:03:28  259655.1      0.28     125.9       0.0                          
+    0:03:28  259584.9      0.28     125.9       0.0                          
+    0:03:28  259559.9      0.28     125.9       0.0                          
+    0:03:28  259516.0      0.28     125.9       0.0                          
+    0:03:29  259464.1      0.28     125.9       0.0                          
+    0:03:29  259412.2      0.28     125.9       0.0                          
+    0:03:30  259360.4      0.28     125.9       0.0                          
+    0:03:30  259308.5      0.28     125.9       0.0                          
+    0:03:31  259256.6      0.28     125.9       0.0                          
+    0:03:31  259206.1      0.28     125.9       0.0                          
+    0:03:31  259198.6      0.28     125.9       0.0                          
+    0:03:31  259196.8      0.28     125.8       0.0                          
+    0:03:32  259140.1      0.28     125.8       0.0                          
+    0:03:35  259112.2      0.28     125.8       0.0                          
+    0:03:36  259110.9      0.28     125.8       0.0                          
+    0:03:36  259106.9      0.28     125.8       0.0                          
+    0:03:37  259106.3      0.28     125.8       0.0                          
+    0:03:42  259105.5      0.28     125.8       0.0                          
+    0:03:42  259104.5      0.28     125.8       0.0                          
+    0:03:43  259101.3      0.28     125.8       0.0                          
+    0:03:43  259059.5      0.28     126.9       0.0                          
+    0:03:44  259059.5      0.28     126.9       0.0                          
+    0:03:44  259059.5      0.28     126.9       0.0                          
+    0:03:44  259059.5      0.28     126.9       0.0                          
+    0:03:44  259059.5      0.28     126.9       0.0                          
+    0:03:44  259059.5      0.28     126.9       0.0                          
+    0:03:44  259063.0      0.28     126.7       0.0 path/genblk1[25].path/path/genblk1.add_in_reg[21]/D
+    0:03:44  259065.4      0.28     126.6       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[19]/D
+    0:03:44  259067.2      0.28     126.4       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[22]/D
+    0:03:44  259070.7      0.28     126.3       0.0 path/genblk1[11].path/path/genblk1.add_in_reg[15]/D
+    0:03:44  259071.8      0.28     126.2       0.0 path/genblk1[19].path/path/genblk1.add_in_reg[21]/D
+    0:03:44  259077.9      0.28     126.1       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[20]/D
+    0:03:45  259081.9      0.28     126.0       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[20]/D
+    0:03:45  259085.6      0.28     125.9       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[21]/D
+    0:03:45  259088.5      0.28     125.8       0.0 path/genblk1[26].path/path/genblk1.add_in_reg[21]/D
+    0:03:45  259092.8      0.28     125.7       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[19]/D
+    0:03:45  259097.6      0.28     125.7       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[21]/D
+    0:03:45  259099.4      0.28     125.6       0.0 path/genblk1[7].path/path/genblk1.add_in_reg[17]/D
+    0:03:45  259110.3      0.27     125.4       0.0 path/genblk1[6].path/path/genblk1.add_in_reg[21]/D
+    0:03:45  259113.0      0.27     125.4       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[21]/D
+    0:03:45  259115.9      0.27     125.4       0.0 path/path/path/genblk1.add_in_reg[21]/D
+    0:03:45  259122.8      0.27     125.3       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[15]/D
+    0:03:45  259127.1      0.27     125.4       0.0 path/genblk1[2].path/path/genblk1.add_in_reg[19]/D
+    0:03:45  259131.3      0.27     125.4       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[21]/D
+    0:03:46  259132.7      0.27     125.4       0.0 path/genblk1[9].path/path/genblk1.add_in_reg[21]/D
+    0:03:46  259134.3      0.27     125.3       0.0                          
+    0:03:46  259135.3      0.27     125.2       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[16]/D
+    0:03:46  259137.2      0.27     125.1       0.0 path/genblk1[28].path/path/genblk1.add_in_reg[21]/D
+    0:03:46  259142.2      0.27     125.1       0.0 path/genblk1[23].path/path/genblk1.add_in_reg[20]/D
+    0:03:46  259147.3      0.27     124.9       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[16]/D
+    0:03:46  259155.8      0.27     124.9       0.0 path/path/path/genblk1.add_in_reg[21]/D
+    0:03:46  259160.6      0.27     124.9       0.0 path/genblk1[5].path/path/genblk1.add_in_reg[21]/D
+    0:03:46  259164.6      0.27     124.8       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[19]/D
+    0:03:46  259169.6      0.27     124.8       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[19]/D
+    0:03:46  259177.6      0.27     124.7       0.0 path/genblk1[21].path/path/genblk1.add_in_reg[22]/D
+    0:03:47  259180.6      0.27     124.5       0.0 path/genblk1[18].path/path/genblk1.add_in_reg[21]/D
+    0:03:47  259185.3      0.27     124.5       0.0 path/genblk1[1].path/path/genblk1.add_in_reg[19]/D
+    0:03:47  259189.1      0.27     124.4       0.0 path/genblk1[20].path/path/genblk1.add_in_reg[19]/D
+    0:03:47  259192.3      0.27     124.4       0.0 path/genblk1[29].path/path/genblk1.add_in_reg[21]/D
+    0:03:47  259194.9      0.27     124.3       0.0 path/genblk1[8].path/path/genblk1.add_in_reg[21]/D
+    0:03:47  259199.2      0.27     124.3       0.0 path/genblk1[24].path/path/genblk1.add_in_reg[19]/D
+    0:03:47  259203.2      0.27     124.2       0.0 path/path/path/genblk1.add_in_reg[21]/D
+    0:03:47  259207.7      0.27     124.1       0.0 path/genblk1[17].path/path/genblk1.add_in_reg[17]/D
+    0:03:47  259208.5      0.27     124.1       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+    0:03:47  259209.3      0.27     124.1       0.0 path/genblk1[30].path/path/genblk1.add_in_reg[16]/D
+    0:03:47  259214.6      0.27     124.0       0.0 path/genblk1[12].path/path/genblk1.add_in_reg[21]/D
+    0:03:47  259218.6      0.27     123.9       0.0 path/genblk1[15].path/path/genblk1.add_in_reg[21]/D
+Loading db file '/home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'mvm_32_32_12_1' contains 2 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'path/genblk1[12].path/path/reset': 1347 load(s), 1 driver(s)
+     Net 'path/genblk1[1].path/genblk1.Vec_y_Mem/Incr/clk': 30729 load(s), 1 driver(s)
+1
+report_area
+ 
+****************************************
+Report : area
+Design : mvm_32_32_12_1
+Version: J-2014.09-SP5-2
+Date   : Wed Dec  2 18:47:08 2015
+****************************************
+
+Information: Updating design information... (UID-85)
+Warning: Design 'mvm_32_32_12_1' contains 2 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Library(s) Used:
+
+    NangateOpenCellLibrary (File: /home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db)
+
+Number of ports:                           42
+Number of nets:                            42
+Number of cells:                            1
+Number of combinational cells:              0
+Number of sequential cells:                 0
+Number of macros/black boxes:               0
+Number of buf/inv:                          0
+Number of references:                       1
+
+Combinational area:             116934.398696
+Buf/Inv area:                     6708.519982
+Noncombinational area:          142284.193033
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (Wire load has zero net area)
+
+Total cell area:                259218.591729
+Total area:                 undefined
+1
+report_power
+Loading db file '/home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : mvm_32_32_12_1
+Version: J-2014.09-SP5-2
+Date   : Wed Dec  2 18:47:19 2015
+****************************************
+
+
+Library(s) Used:
+
+    NangateOpenCellLibrary (File: /home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db)
+
+
+Operating Conditions: typical   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+Design        Wire Load Model            Library
+------------------------------------------------
+mvm_32_32_12_1         5K_hvratio_1_1    NangateOpenCellLibrary
+
+
+Global Operating Voltage = 1.1  
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000ff
+    Time Units = 1ns
+    Dynamic Power Units = 1uW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+  Cell Internal Power  = 184.8945 mW   (90%)
+  Net Switching Power  =  20.0832 mW   (10%)
+                         ---------
+Total Dynamic Power    = 204.9776 mW  (100%)
+
+Cell Leakage Power     =   5.3790 mW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
+register       1.7699e+05        2.4962e+03        2.4211e+06        1.8191e+05  (  86.48%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational  7.9001e+03        1.7587e+04        2.9579e+06        2.8443e+04  (  13.52%)
+--------------------------------------------------------------------------------------------------
+Total          1.8489e+05 uW     2.0083e+04 uW     5.3790e+06 nW     2.1035e+05 uW
+1
+report_timing
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : mvm_32_32_12_1
+Version: J-2014.09-SP5-2
+Date   : Wed Dec  2 18:47:20 2015
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: typical   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+  Startpoint: path/genblk1[18].path/Mat_a_Mem/Mem/data_out_tri_enable_reg[7]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: path/genblk1[18].path/path/genblk1.add_in_reg[21]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  mvm_32_32_12_1     5K_hvratio_1_1        NangateOpenCellLibrary
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  path/genblk1[18].path/Mat_a_Mem/Mem/data_out_tri_enable_reg[7]/CK (DFF_X1)
+                                                          0.00 #     0.00 r
+  path/genblk1[18].path/Mat_a_Mem/Mem/data_out_tri_enable_reg[7]/Q (DFF_X1)
+                                                          0.09       0.09 r
+  path/genblk1[18].path/Mat_a_Mem/Mem/data_out_tri[7]/Z (TBUF_X4)
+                                                          0.13       0.22 f
+  path/genblk1[18].path/Mat_a_Mem/Mem/data_out[7] (memory_b12_SIZE32_LOGSIZE5_28)
+                                                          0.00       0.22 f
+  path/genblk1[18].path/Mat_a_Mem/data_out[7] (seqMemory_b12_SIZE32_28)
+                                                          0.00       0.22 f
+  path/genblk1[18].path/path/in0[7] (mac_b12_g1_14)       0.00       0.22 f
+  path/genblk1[18].path/path/mult_21/a[7] (mac_b12_g1_14_DW_mult_tc_1)
+                                                          0.00       0.22 f
+  path/genblk1[18].path/path/mult_21/U524/Z (XOR2_X1)     0.09       0.31 f
+  path/genblk1[18].path/path/mult_21/U494/ZN (INV_X1)     0.06       0.37 r
+  path/genblk1[18].path/path/mult_21/U821/ZN (OAI22_X1)
+                                                          0.05       0.42 f
+  path/genblk1[18].path/path/mult_21/U817/ZN (OR2_X1)     0.06       0.48 f
+  path/genblk1[18].path/path/mult_21/U223/CO (FA_X1)      0.09       0.57 f
+  path/genblk1[18].path/path/mult_21/U218/S (FA_X1)       0.14       0.71 r
+  path/genblk1[18].path/path/mult_21/U217/S (FA_X1)       0.11       0.83 f
+  path/genblk1[18].path/path/mult_21/U620/ZN (NAND2_X1)
+                                                          0.04       0.87 r
+  path/genblk1[18].path/path/mult_21/U599/ZN (OAI21_X1)
+                                                          0.03       0.90 f
+  path/genblk1[18].path/path/mult_21/U734/ZN (AOI21_X1)
+                                                          0.07       0.97 r
+  path/genblk1[18].path/path/mult_21/U572/ZN (OAI21_X1)
+                                                          0.05       1.02 f
+  path/genblk1[18].path/path/mult_21/U897/ZN (AOI21_X1)
+                                                          0.05       1.07 r
+  path/genblk1[18].path/path/mult_21/U501/ZN (XNOR2_X1)
+                                                          0.06       1.13 r
+  path/genblk1[18].path/path/mult_21/product[21] (mac_b12_g1_14_DW_mult_tc_1)
+                                                          0.00       1.13 r
+  path/genblk1[18].path/path/genblk1.add_in_reg[21]/D (DFF_X1)
+                                                          0.01       1.14 r
+  data arrival time                                                  1.14
+
+  clock clk (rise edge)                                   0.90       0.90
+  clock network delay (ideal)                             0.00       0.90
+  path/genblk1[18].path/path/genblk1.add_in_reg[21]/CK (DFF_X1)
+                                                          0.00       0.90 r
+  library setup time                                     -0.03       0.87
+  data required time                                                 0.87
+  --------------------------------------------------------------------------
+  data required time                                                 0.87
+  data arrival time                                                 -1.14
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -0.27
+
+
+1
+write -f verilog $TOP_MOD_NAME -output gates.v -hierarchy
+Writing verilog file '/home/home5/lfolkerts/ese507/Project2/Project3/src/tmp/gates.v'.
+Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
+Warning: Verilog writer has added 31 nets to module multipath_k32_p32_b12_g1 using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+1
+quit
+
+Thank you...

@@ -1,0 +1,744 @@
+
+                      Design Compiler Graphical
+                            DC Ultra (TM)
+                             DFTMAX (TM)
+                         Power Compiler (TM)
+                           DesignWare (R)
+                           DC Expert (TM)
+                         Design Vision (TM)
+                          HDL Compiler (TM)
+                         VHDL Compiler (TM)
+                            DFT Compiler
+                        Library Compiler (TM)
+                         Design Compiler(R)
+
+         Version J-2014.09-SP5-2 for RHEL64 -- Jul 11, 2015
+               Copyright (c) 1988-2015 Synopsys, Inc.
+
+This software and the associated documentation are confidential and 
+proprietary to Synopsys, Inc. Your use or disclosure of this software 
+is subject to the terms and conditions of a written license agreement 
+between you, or your company, and Synopsys, Inc.
+
+Initializing...
+##############################################
+# Setup: fill out the following parameters: name of clock signal, clock period (ns),
+# reset signal name (if used), name of top-level module, name of source file
+set CLK_NAME "clk";
+clk
+set CLK_PERIOD 2.30000000000000000000;
+2.30000000000000000000
+set RST_NAME "reset";
+reset
+set TOP_MOD_NAME "mvm_16_16_16_0";
+mvm_16_16_16_0
+set SRC_FILE "test.sv";
+test.sv
+###############################################
+source setupdc.tcl
+NangateOpenCellLibrary_typical.db dw_foundation.sldb
+file mkdir work_synth
+define_design_lib WORK -path work_synth
+1
+analyze $SRC_FILE -format sverilog
+Running PRESTO HDLC
+Searching for ./test.sv
+Compiling source file ./test.sv
+Presto compilation completed successfully.
+Loading db file '/home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db'
+Loading db file '/usr/local/synopsys/syn/libraries/syn/dw_foundation.sldb'
+1
+elaborate -work WORK $TOP_MOD_NAME
+Loading db file '/usr/local/synopsys/syn/libraries/syn/gtech.db'
+Loading db file '/usr/local/synopsys/syn/libraries/syn/standard.sldb'
+  Loading link library 'NangateOpenCellLibrary'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+Presto compilation completed successfully.
+Elaborated 1 design.
+Current design is now 'mvm_16_16_16_0'.
+Information: Building the design 'multipath' instantiated from design 'mvm_16_16_16_0' with
+	the parameters "16,16,16,0". (HDL-193)
+
+Inferred memory devices in process
+	in routine multipath_k16_p16_b16_g0 line 281 in file
+		'./test.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      y_rd_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      done_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      delay_reg      | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'increaser' instantiated from design 'multipath_k16_p16_b16_g0' with
+	the parameters "4,15". (HDL-193)
+
+Inferred memory devices in process
+	in routine increaser_b4_TOP15 line 65 in file
+		'./test.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       out_reg       | Flip-flop |   4   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'singlepath' instantiated from design 'multipath_k16_p16_b16_g0' with
+	the parameters "1,16,16,0|((E%)(E%)(E%)(E%)(E%)(E%)(X%)(E%)(E%)(E%))". (HDL-193)
+
+Statistics for case statements in always block at line 173 in file
+	'./test.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           189            |     no/auto      |
+===============================================
+
+Inferred memory devices in process
+	in routine singlepath_n_row1_n_col16_b16_g0 line 173 in file
+		'./test.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      y_re_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|     acc_aux_reg     | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      y_we_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      ready_reg      | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      x_re_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      state_reg      | Flip-flop |   6   |  Y  | N  | N  | N  | N  | N  | N  |
+|      a_we_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      x_we_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+|      a_re_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'seqMemory' instantiated from design 'singlepath_n_row1_n_col16_b16_g0' with
+	the parameters "16,16". (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'seqMemory' instantiated from design 'singlepath_n_row1_n_col16_b16_g0' with
+	the parameters "32,1". (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'mac' instantiated from design 'singlepath_n_row1_n_col16_b16_g0' with
+	the parameters "16,0". (HDL-193)
+Warning:  ./test.sv:21: signed to unsigned assignment occurs. (VER-318)
+Warning:  ./test.sv:27: unsigned to signed assignment occurs. (VER-318)
+Warning:  ./test.sv:34: signed to unsigned assignment occurs. (VER-318)
+
+Inferred memory devices in process
+	in routine mac_b16_g0 line 29 in file
+		'./test.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     add_out_reg     | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'memory' instantiated from design 'seqMemory_b16_SIZE16' with
+	the parameters "16,16,4". (HDL-193)
+
+Inferred memory devices in process
+	in routine memory_b16_SIZE16_LOGSIZE4 line 99 in file
+		'./test.sv'.
+===================================================================================
+|      Register Name      |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===================================================================================
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|         mem_reg         | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+|      data_out_reg       | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+| data_out_tri_enable_reg | Flip-flop |  16   |  Y  | N  | N  | N  | N  | N  | N  |
+===================================================================================
+
+Inferred tri-state devices in process
+	in routine memory_b16_SIZE16_LOGSIZE4 line 99 in file
+		'./test.sv'.
+=================================================
+| Register Name |       Type       | Width | MB |
+=================================================
+| data_out_tri  | Tri-State Buffer |  16   | N  |
+=================================================
+Statistics for MUX_OPs
+=========================================================================
+|        block name/line         | Inputs | Outputs | # sel inputs | MB |
+=========================================================================
+| memory_b16_SIZE16_LOGSIZE4/105 |   16   |   16    |      4       | N  |
+=========================================================================
+Presto compilation completed successfully.
+Information: Building the design 'memory' instantiated from design 'seqMemory_b32_SIZE1' with
+	the parameters "32,1,1". (HDL-193)
+
+Inferred memory devices in process
+	in routine memory_b32_SIZE1_LOGSIZE1 line 99 in file
+		'./test.sv'.
+===================================================================================
+|      Register Name      |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===================================================================================
+|         mem_reg         | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+|      data_out_reg       | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+| data_out_tri_enable_reg | Flip-flop |  32   |  Y  | N  | N  | N  | N  | N  | N  |
+===================================================================================
+
+Inferred tri-state devices in process
+	in routine memory_b32_SIZE1_LOGSIZE1 line 99 in file
+		'./test.sv'.
+=================================================
+| Register Name |       Type       | Width | MB |
+=================================================
+| data_out_tri  | Tri-State Buffer |  32   | N  |
+=================================================
+Presto compilation completed successfully.
+Information: Building the design 'increaser' instantiated from design 'seqMemory_b32_SIZE1' with
+	the parameters "1,0". (HDL-193)
+
+Inferred memory devices in process
+	in routine increaser_b1_TOP0 line 65 in file
+		'./test.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       out_reg       | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+1
+###### CLOCKS AND PORTS #######
+set CLK_PORT [get_ports $CLK_NAME]
+{clk}
+set TMP1 [remove_from_collection [all_inputs] $CLK_PORT]
+{reset loadMatrix loadVector start data_in[15] data_in[14] data_in[13] data_in[12] data_in[11] data_in[10] data_in[9] data_in[8] data_in[7] data_in[6] data_in[5] data_in[4] data_in[3] data_in[2] data_in[1] data_in[0]}
+set INPUTS [remove_from_collection $TMP1 $RST_NAME]
+{loadMatrix loadVector start data_in[15] data_in[14] data_in[13] data_in[12] data_in[11] data_in[10] data_in[9] data_in[8] data_in[7] data_in[6] data_in[5] data_in[4] data_in[3] data_in[2] data_in[1] data_in[0]}
+create_clock -period $CLK_PERIOD [get_ports clk]
+1
+#set_input_delay 1 -max -clock clk $INPUTS
+#set_output_delay 1 -max -clock clk [all_outputs]
+# rule of thumb: 20% of clock period
+###### OPTIMIZATION #######
+set_max_area 0 
+1
+###### RUN #####
+compile
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | J-2014.09-DWBB_201409.5.2 |   *     |
+| Licensed DW Building Blocks        | J-2014.09-DWBB_201409.5.2 |   *     |
+============================================================================
+
+
+Information: There are 682 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'mac_b16_g0_0'
+  Processing 'increaser_b1_TOP0_0'
+  Processing 'memory_b32_SIZE1_LOGSIZE1_0'
+  Processing 'seqMemory_b32_SIZE1_0'
+  Processing 'increaser_b4_TOP15_0'
+  Processing 'memory_b16_SIZE16_LOGSIZE4_0'
+  Processing 'seqMemory_b16_SIZE16_0'
+  Processing 'singlepath_n_row1_n_col16_b16_g0_0'
+Information: The register 'state_reg[3]' is a constant and will be removed. (OPT-1206)
+Information: The register 'state_reg[4]' is a constant and will be removed. (OPT-1206)
+Information: The register 'state_reg[5]' is a constant and will be removed. (OPT-1206)
+  Processing 'multipath_k16_p16_b16_g0'
+  Processing 'mvm_16_16_16_0'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'mac_b16_g0_1_DW01_add_0'
+  Processing 'mac_b16_g0_2_DW01_add_0'
+  Processing 'mac_b16_g0_3_DW01_add_0'
+  Processing 'mac_b16_g0_4_DW01_add_0'
+  Processing 'mac_b16_g0_5_DW01_add_0'
+  Processing 'mac_b16_g0_6_DW01_add_0'
+  Processing 'mac_b16_g0_7_DW01_add_0'
+  Processing 'mac_b16_g0_8_DW01_add_0'
+  Processing 'mac_b16_g0_9_DW01_add_0'
+  Processing 'mac_b16_g0_10_DW01_add_0'
+  Processing 'mac_b16_g0_11_DW01_add_0'
+  Processing 'mac_b16_g0_12_DW01_add_0'
+  Processing 'mac_b16_g0_13_DW01_add_0'
+  Processing 'mac_b16_g0_14_DW01_add_0'
+  Processing 'mac_b16_g0_15_DW01_add_0'
+  Processing 'mac_b16_g0_0_DW01_add_0'
+  Mapping 'mac_b16_g0_1_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_2_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_3_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_4_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_5_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_6_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_7_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_8_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_9_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_10_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_11_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_12_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_13_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_14_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_15_DW_mult_tc_0'
+  Mapping 'mac_b16_g0_0_DW_mult_tc_0'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+  Mapping Optimization (Phase 1)
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:25  154630.1      0.83     377.2   18676.7                          
+    0:00:25  154630.1      0.83     377.2   18676.7                          
+    0:00:25  154674.7      0.83     377.2   18676.7                          
+    0:00:25  154719.4      0.83     377.2   18676.7                          
+    0:00:25  154764.1      0.83     377.2   18676.7                          
+    0:00:25  154801.6      0.83     377.2   18634.1                          
+    0:00:26  155261.5      0.83     377.0    8492.6                          
+    0:00:34  143039.9      0.12       0.4      26.2 path/genblk1[15].path/path/*cell*59586/*cell*59678/ZN
+    0:00:34  142932.2      0.07       0.2      26.2 path/genblk1[15].path/path/*cell*59586/*cell*59727/ZN
+    0:00:34  142869.9      0.06       0.2      26.2 path/genblk1[15].path/path/*cell*59586/*cell*59711/ZN
+    0:00:34  142832.2      0.06       0.2      26.2 path/genblk1[15].path/path/*cell*59586/U139/ZN
+    0:00:34  142807.4      0.06       0.2      26.2 path/genblk1[15].path/path/*cell*59586/*cell*59789/ZN
+    0:00:34  142732.9      0.06       0.2      26.2 path/genblk1[15].path/path/*cell*59586/U203/ZN
+    0:00:34  142721.2      0.06       0.2      26.2 path/genblk1[15].path/path/*cell*59586/U2/Z
+    0:00:35  143156.9      0.44       7.4      26.2 path/genblk1[14].path/path/*cell*59879/U99/ZN
+    0:00:35  143030.3      0.07       0.1      26.2 path/genblk1[14].path/path/*cell*59879/*cell*59949/ZN
+    0:00:35  142943.1      0.02       0.0      26.2 path/genblk1[14].path/path/*cell*59879/*cell*59996/ZN
+    0:00:35  142895.5      0.02       0.0      26.2 path/genblk1[14].path/path/*cell*59879/U136/ZN
+    0:00:35  142871.3      0.02       0.0      26.2 path/genblk1[14].path/path/*cell*59879/*cell*60073/ZN
+    0:00:35  142784.8      0.02       0.0      26.2 path/genblk1[14].path/path/*cell*59879/U197/ZN
+    0:00:35  142755.0      0.02       0.0      26.2 path/genblk1[14].path/path/*cell*59879/U11/ZN
+    0:00:35  142746.5      0.02       0.0      26.2 path/genblk1[14].path/path/*cell*59879/*cell*60092/ZN
+    0:00:35  142557.4      0.09       0.4      27.0 path/genblk1[13].path/path/*cell*60166/U77/ZN
+    0:00:36  142474.4      0.02       0.1      26.2 path/genblk1[13].path/path/*cell*60166/U176/ZN
+    0:00:36  142405.0      0.02       0.0      26.2 path/genblk1[13].path/path/*cell*60166/U189/ZN
+    0:00:36  142344.8      0.02       0.0      26.2 path/genblk1[13].path/path/*cell*60166/U17/ZN
+    0:00:36  142320.6      0.02       0.0      26.2 path/genblk1[13].path/path/*cell*60166/*cell*60242/ZN
+    0:00:36  142279.7      0.02       0.0      26.2 path/genblk1[13].path/path/*cell*60166/U212/ZN
+    0:00:36  142250.7      0.02       0.0      26.2 path/genblk1[13].path/path/*cell*60166/*cell*60302/ZN
+    0:00:36  142210.0      0.49       9.8      26.2 path/genblk1[12].path/path/*cell*60448/U1/Z
+    0:00:36  142059.7      0.09       0.4      26.2 path/genblk1[12].path/path/*cell*60448/U122/ZN
+    0:00:36  141921.4      0.02       0.0      26.2 path/genblk1[12].path/path/*cell*60448/*cell*60576/ZN
+    0:00:36  141869.5      0.02       0.0      26.2 path/genblk1[12].path/path/*cell*60448/*cell*60624/ZN
+    0:00:36  141822.7      0.02       0.0      26.2 path/genblk1[12].path/path/*cell*60448/U92/ZN
+    0:00:36  141803.3      0.02       0.0      26.2 path/genblk1[12].path/path/*cell*60448/*cell*60685/ZN
+    0:00:36  141768.2      0.02       0.0      26.2 path/genblk1[12].path/path/*cell*60448/*cell*60697/ZN
+    0:00:36  141748.5      0.02       0.0      26.2 path/genblk1[12].path/path/*cell*60448/U2/Z
+    0:00:37  141672.9      0.39       6.2      26.2 path/genblk1[11].path/path/*cell*60732/U195/Z
+    0:00:37  141566.3      0.09       0.3      26.2 path/genblk1[11].path/path/*cell*60732/U156/ZN
+    0:00:37  141452.9      0.03       0.1      26.2 path/genblk1[11].path/path/*cell*60732/*cell*60843/ZN
+    0:00:37  141397.6      0.03       0.1      26.2 path/genblk1[11].path/path/*cell*60732/*cell*60866/ZN
+    0:00:37  141348.7      0.03       0.1      26.2 path/genblk1[11].path/path/*cell*60732/*cell*60867/ZN
+    0:00:37  141325.0      0.03       0.1      26.2 path/genblk1[11].path/path/*cell*60732/U248/ZN
+    0:00:37  141284.3      0.03       0.1      26.2 path/genblk1[11].path/path/*cell*60732/*cell*60994/ZN
+    0:00:37  141267.5      0.03       0.1      26.2 path/genblk1[11].path/path/*cell*60732/U260/ZN
+    0:00:37  141123.6      0.27       1.8      26.2 path/genblk1[10].path/path/*cell*61036/U49/ZN
+    0:00:38  141025.8      0.07       0.3      26.2 path/genblk1[10].path/path/*cell*61036/*cell*61141/ZN
+    0:00:38  140924.1      0.03       0.1      26.2 path/genblk1[10].path/path/*cell*61036/*cell*61195/ZN
+    0:00:38  140885.6      0.03       0.1      26.2 path/genblk1[10].path/path/*cell*61036/*cell*61178/ZN
+    0:00:38  140862.2      0.03       0.1      26.2 path/genblk1[10].path/path/*cell*61036/*cell*61253/ZN
+    0:00:38  140814.5      0.03       0.1      26.2 path/genblk1[10].path/path/*cell*61036/*cell*61266/ZN
+    0:00:38  140776.2      0.03       0.1      26.2 path/genblk1[10].path/path/*cell*61036/*cell*61299/ZN
+    0:00:38  140767.5      0.03       0.1      26.2 path/genblk1[10].path/path/*cell*61036/*cell*61100/ZN
+    0:00:38  140588.7      0.10       0.6      26.2 path/genblk1[9].path/path/*cell*61326/U135/ZN
+    0:00:38  140446.9      0.03       0.2      26.2 path/genblk1[9].path/path/*cell*61326/U74/ZN
+    0:00:38  140392.1      0.03       0.1      26.2 path/genblk1[9].path/path/*cell*61326/*cell*61507/ZN
+    0:00:38  140365.0      0.03       0.1      26.2 path/genblk1[9].path/path/*cell*61326/*cell*61518/ZN
+    0:00:38  140314.5      0.03       0.1      26.2 path/genblk1[9].path/path/*cell*61326/U235/ZN
+    0:00:38  140262.1      0.03       0.1      26.2 path/genblk1[9].path/path/*cell*61326/U5/ZN
+    0:00:38  140253.0      0.03       0.1      26.2 path/genblk1[9].path/path/*cell*61326/*cell*61550/ZN
+    0:00:39  140073.7      0.12       0.5      26.2 path/genblk1[8].path/path/*cell*61605/*cell*61690/ZN
+    0:00:39  139942.6      0.04       0.2      26.2 path/genblk1[8].path/path/*cell*61605/*cell*61695/ZN
+    0:00:39  139867.3      0.03       0.2      26.2 path/genblk1[8].path/path/*cell*61605/*cell*61725/ZN
+    0:00:39  139808.5      0.03       0.1      26.2 path/genblk1[8].path/path/*cell*61605/*cell*61800/ZN
+    0:00:39  139792.3      0.03       0.1      26.2 path/genblk1[8].path/path/*cell*61605/*cell*61781/ZN
+    0:00:39  139752.4      0.03       0.1      26.2 path/genblk1[8].path/path/*cell*61605/*cell*61822/ZN
+    0:00:39  139735.7      0.03       0.1      26.2 path/genblk1[8].path/path/*cell*61605/U2/Z
+    0:00:39  139685.4      0.47       9.0      26.2 path/genblk1[7].path/path/*cell*61893/U83/Z
+    0:00:39  139555.6      0.11       0.5      26.2 path/genblk1[7].path/path/*cell*61893/U144/ZN
+    0:00:40  139418.8      0.03       0.2      26.2 path/genblk1[7].path/path/*cell*61893/*cell*61987/ZN
+    0:00:40  139347.6      0.03       0.2      26.2 path/genblk1[7].path/path/*cell*61893/*cell*62085/ZN
+    0:00:40  139327.6      0.03       0.2      26.2 path/genblk1[7].path/path/*cell*61893/U210/ZN
+    0:00:40  139298.1      0.03       0.2      26.2 path/genblk1[7].path/path/*cell*61893/*cell*62128/ZN
+    0:00:40  139267.0      0.03       0.2      26.2 path/genblk1[7].path/path/*cell*61893/*cell*62104/ZN
+    0:00:40  139248.3      0.03       0.2      26.2 path/genblk1[7].path/path/*cell*61893/U255/ZN
+    0:00:40  139128.1      0.20       1.8      26.2 path/genblk1[6].path/path/*cell*62184/*cell*62258/ZN
+    0:00:40  139030.5      0.06       0.3      26.2 path/genblk1[6].path/path/*cell*62184/*cell*62301/ZN
+    0:00:40  138927.3      0.03       0.2      26.2 path/genblk1[6].path/path/*cell*62184/*cell*62356/ZN
+    0:00:40  138875.9      0.03       0.2      26.2 path/genblk1[6].path/path/*cell*62184/U16/ZN
+    0:00:40  138831.5      0.03       0.2      26.2 path/genblk1[6].path/path/*cell*62184/*cell*62282/ZN
+    0:00:40  138813.4      0.03       0.2      26.2 path/genblk1[6].path/path/*cell*62184/*cell*62326/ZN
+    0:00:40  138778.3      0.03       0.2      26.2 path/genblk1[6].path/path/*cell*62184/*cell*62401/ZN
+    0:00:41  138769.0      0.03       0.2      26.2 path/genblk1[6].path/path/*cell*62184/*cell*62450/ZN
+    0:00:41  138610.5      0.10       0.7      26.2 path/genblk1[5].path/path/*cell*62472/U80/ZN
+    0:00:41  138500.3      0.03       0.2      26.2 path/genblk1[5].path/path/*cell*62472/*cell*62594/ZN
+    0:00:41  138444.5      0.03       0.2      26.2 path/genblk1[5].path/path/*cell*62472/*cell*62593/ZN
+    0:00:41  138395.8      0.03       0.2      26.2 path/genblk1[5].path/path/*cell*62472/U15/ZN
+    0:00:41  138372.4      0.03       0.2      26.2 path/genblk1[5].path/path/*cell*62472/*cell*62675/ZN
+    0:00:41  138305.9      0.03       0.2      26.2 path/genblk1[5].path/path/*cell*62472/*cell*62727/ZN
+    0:00:41  138295.0      0.03       0.2      26.2 path/genblk1[5].path/path/*cell*62472/*cell*62636/ZN
+    0:00:41  138151.1      0.25       2.8      26.2 path/genblk1[4].path/path/*cell*62753/*cell*62755/ZN
+    0:00:42  138036.2      0.03       0.2      26.2 path/genblk1[4].path/path/*cell*62753/*cell*62854/ZN
+    0:00:42  137951.9      0.03       0.2      26.2 path/genblk1[4].path/path/*cell*62753/*cell*62905/ZN
+    0:00:42  137892.8      0.03       0.2      26.2 path/genblk1[4].path/path/*cell*62753/*cell*62937/ZN
+    0:00:42  137872.6      0.03       0.2      26.2 path/genblk1[4].path/path/*cell*62753/U208/ZN
+    0:00:42  137814.6      0.03       0.2      26.2 path/genblk1[4].path/path/*cell*62753/U217/ZN
+    0:00:42  137789.9      0.03       0.2      26.2 path/genblk1[4].path/path/*cell*62753/*cell*63008/ZN
+    0:00:42  137715.6      0.59       8.3      26.2 path/genblk1[3].path/path/*cell*63026/U1/Z
+    0:00:42  137549.7      0.13       0.6      26.2 path/genblk1[3].path/path/*cell*63026/*cell*63117/ZN
+    0:00:42  137440.1      0.04       0.3      26.2 path/genblk1[3].path/path/*cell*63026/U152/ZN
+    0:00:42  137390.1      0.04       0.3      26.2 path/genblk1[3].path/path/*cell*63026/U127/ZN
+    0:00:42  137341.7      0.04       0.3      26.2 path/genblk1[3].path/path/*cell*63026/*cell*63250/ZN
+    0:00:42  137307.6      0.04       0.3      26.2 path/genblk1[3].path/path/*cell*63026/*cell*63238/ZN
+    0:00:42  137267.2      0.04       0.3      26.2 path/genblk1[3].path/path/*cell*63026/U18/ZN
+    0:00:42  137257.9      0.04       0.3      26.2 path/genblk1[3].path/path/*cell*63026/*cell*63295/ZN
+    0:00:43  137033.6      0.10       0.6      26.2 path/genblk1[2].path/path/*cell*63317/U60/ZN
+    0:00:43  136899.3      0.04       0.3      26.2 path/genblk1[2].path/path/*cell*63317/U91/ZN
+    0:00:43  136848.5      0.04       0.3      26.2 path/genblk1[2].path/path/*cell*63317/*cell*63510/ZN
+    0:00:43  136824.0      0.04       0.3      26.2 path/genblk1[2].path/path/*cell*63317/U21/ZN
+    0:00:43  136777.5      0.04       0.3      26.2 path/genblk1[2].path/path/*cell*63317/U36/ZN
+    0:00:43  136739.4      0.04       0.3      26.2 path/genblk1[2].path/path/*cell*63317/*cell*63526/ZN
+    0:00:43  136727.2      0.04       0.3      26.2 path/genblk1[2].path/path/*cell*63317/*cell*63384/ZN
+    0:00:43  136548.2      0.12       0.8      26.2 path/genblk1[1].path/path/*cell*63590/*cell*63639/ZN
+    0:00:43  136410.4      0.04       0.4      26.2 path/genblk1[1].path/path/*cell*63590/*cell*63706/ZN
+    0:00:44  136356.7      0.04       0.3      26.2 path/genblk1[1].path/path/*cell*63590/*cell*63732/ZN
+    0:00:44  136322.9      0.04       0.3      26.2 path/genblk1[1].path/path/*cell*63590/*cell*63809/ZN
+    0:00:44  136281.4      0.04       0.3      26.2 path/genblk1[1].path/path/*cell*63590/*cell*63811/ZN
+    0:00:44  136244.7      0.04       0.3      26.2 path/genblk1[1].path/path/*cell*63590/*cell*63823/ZN
+    0:00:44  136225.2      0.04       0.3      26.2 path/genblk1[1].path/path/*cell*63590/U2/Z
+    0:00:44  136136.4      0.32       5.5      26.2 path/path/path/*cell*63879/U197/Z
+    0:00:44  136010.9      0.06       0.5      26.2 path/path/path/*cell*63879/*cell*63961/ZN
+    0:00:44  135939.3      0.04       0.3      26.2 path/path/path/*cell*63879/U88/ZN
+    0:00:44  135889.6      0.04       0.3      26.2 path/path/path/*cell*63879/*cell*64049/ZN
+    0:00:44  135850.2      0.04       0.3      26.2 path/path/path/*cell*63879/U15/ZN
+    0:00:44  135812.7      0.04       0.3      26.2 path/path/path/*cell*63879/U223/ZN
+    0:00:44  135765.9      0.04       0.3      26.2 path/path/path/*cell*63879/*cell*64084/ZN
+    0:00:44  135748.8      0.04       0.3      26.2 path/path/path/*cell*63879/U249/ZN
+    0:00:49  135743.3      0.04       0.3      26.2                          
+    0:00:49  135743.3      0.04       0.3      26.2                          
+    0:00:49  135743.3      0.04       0.3      26.2                          
+    0:00:50  135743.3      0.04       0.3      26.2                          
+    0:00:50  135743.3      0.04       0.3      26.2                          
+    0:01:01  108684.1      0.00       0.0       0.0                          
+    0:01:03  108452.7      0.00       0.0       0.0                          
+    0:01:05  108452.7      0.00       0.0       0.0                          
+    0:01:05  108452.7      0.00       0.0       0.0                          
+    0:01:05  108316.3      0.00       0.0       0.0                          
+    0:01:05  108316.3      0.00       0.0       0.0                          
+    0:01:06  108316.3      0.00       0.0       0.0                          
+    0:01:06  108316.3      0.00       0.0       0.0                          
+    0:01:06  108316.3      0.00       0.0       0.0                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:01:06  108316.3      0.00       0.0       0.0                          
+    0:01:06  108316.3      0.00       0.0       0.0                          
+    0:01:06  108312.0      0.00       0.0       0.0                          
+
+
+  Beginning Area-Recovery Phase  (max_area 0)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:01:06  108312.0      0.00       0.0       0.0                          
+    0:01:07  108312.0      0.00       0.0       0.0                          
+    0:01:09  107686.1      0.00       0.0       0.0                          
+    0:01:10  107517.2      0.00       0.0       0.0                          
+    0:01:10  107460.0      0.00       0.0       0.0                          
+    0:01:11  107434.5      0.00       0.0       0.0                          
+    0:01:11  107410.5      0.00       0.0       0.0                          
+    0:01:11  107391.4      0.00       0.0       0.0                          
+    0:01:12  107373.3      0.00       0.0       0.0                          
+    0:01:12  107355.7      0.00       0.0       0.0                          
+    0:01:12  107346.7      0.00       0.0       0.0                          
+    0:01:13  107330.2      0.00       0.0       0.0                          
+    0:01:13  107321.7      0.00       0.0       0.0                          
+    0:01:13  107313.2      0.00       0.0       0.0                          
+    0:01:13  107304.7      0.00       0.0       0.0                          
+    0:01:13  107296.2      0.00       0.0       0.0                          
+    0:01:13  107287.6      0.00       0.0       0.0                          
+    0:01:13  107279.1      0.00       0.0       0.0                          
+    0:01:13  107279.1      0.00       0.0       0.0                          
+    0:01:14  107279.1      0.00       0.0       0.0                          
+    0:01:14  107201.7      0.00       0.0       0.0                          
+    0:01:14  107200.1      0.00       0.0       0.0                          
+    0:01:14  107200.1      0.00       0.0       0.0                          
+    0:01:14  107200.1      0.00       0.0       0.0                          
+    0:01:14  107200.1      0.00       0.0       0.0                          
+    0:01:14  107200.1      0.00       0.0       0.0                          
+    0:01:14  107200.1      0.00       0.0       0.0                          
+    0:01:16  107126.7      0.00       0.0       0.0                          
+    0:01:16  107034.9      0.00       0.0       0.0                          
+    0:01:17  106941.6      0.00       0.0       0.0                          
+    0:01:17  106845.0      0.00       0.0       0.0                          
+    0:01:17  106750.9      0.00       0.0       0.0                          
+    0:01:17  106663.1      0.00       0.0       0.0                          
+    0:01:18  106586.5      0.00       0.0       0.0                          
+    0:01:18  106509.9      0.00       0.0       0.0                          
+    0:01:19  106384.6      0.00       0.0       0.0                          
+    0:01:19  106277.6      0.00       0.0       0.0                          
+    0:01:19  106262.5      0.00       0.0       0.0                          
+    0:01:19  106241.7      0.00       0.0       0.0                          
+    0:01:19  106216.2      0.00       0.0       0.0                          
+    0:01:20  106160.6      0.00       0.0       0.0                          
+    0:01:20  106109.5      0.00       0.0       0.0                          
+    0:01:21  106103.7      0.00       0.0       0.0                          
+    0:01:22  106101.8      0.00       0.0       0.0                          
+    0:01:23  106101.8      0.00       0.0       0.0                          
+    0:01:23  106101.8      0.00       0.0       0.0                          
+    0:01:23  106101.8      0.00       0.0       0.0                          
+    0:01:23  106101.8      0.00       0.0       0.0                          
+    0:01:23  106101.8      0.00       0.0       0.0                          
+    0:01:23  106101.8      0.00       0.0       0.0                          
+    0:01:24  106101.8      0.00       0.0       0.0                          
+Loading db file '/home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'mvm_16_16_16_0' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'path/genblk1[1].path/genblk1.Vec_y_Mem/Incr/clk': 11591 load(s), 1 driver(s)
+1
+report_area
+ 
+****************************************
+Report : area
+Design : mvm_16_16_16_0
+Version: J-2014.09-SP5-2
+Date   : Mon Nov 30 23:14:12 2015
+****************************************
+
+Information: Updating design information... (UID-85)
+Warning: Design 'mvm_16_16_16_0' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Library(s) Used:
+
+    NangateOpenCellLibrary (File: /home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db)
+
+Number of ports:                           54
+Number of nets:                            54
+Number of cells:                            1
+Number of combinational cells:              0
+Number of sequential cells:                 0
+Number of macros/black boxes:               0
+Number of buf/inv:                          0
+Number of references:                       1
+
+Combinational area:              52037.048248
+Buf/Inv area:                     3098.900008
+Noncombinational area:           54064.764115
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (Wire load has zero net area)
+
+Total cell area:                106101.812363
+Total area:                 undefined
+1
+report_power
+Loading db file '/home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : mvm_16_16_16_0
+Version: J-2014.09-SP5-2
+Date   : Mon Nov 30 23:14:17 2015
+****************************************
+
+
+Library(s) Used:
+
+    NangateOpenCellLibrary (File: /home/home4/pmilder/ese507/synthesis/lib/NangateOpenCellLibrary_typical.db)
+
+
+Operating Conditions: typical   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+Design        Wire Load Model            Library
+------------------------------------------------
+mvm_16_16_16_0         5K_hvratio_1_1    NangateOpenCellLibrary
+
+
+Global Operating Voltage = 1.1  
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000ff
+    Time Units = 1ns
+    Dynamic Power Units = 1uW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+  Cell Internal Power  =  25.3396 mW   (87%)
+  Net Switching Power  =   3.6986 mW   (13%)
+                         ---------
+Total Dynamic Power    =  29.0382 mW  (100%)
+
+Cell Leakage Power     =   2.2115 mW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
+register       2.3550e+04          489.2361        9.1344e+05        2.4952e+04  (  79.85%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational  1.7900e+03        3.2094e+03        1.2981e+06        6.2975e+03  (  20.15%)
+--------------------------------------------------------------------------------------------------
+Total          2.5340e+04 uW     3.6986e+03 uW     2.2115e+06 nW     3.1250e+04 uW
+1
+report_timing
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : mvm_16_16_16_0
+Version: J-2014.09-SP5-2
+Date   : Mon Nov 30 23:14:17 2015
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: typical   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+  Startpoint: path/genblk1[3].path/Mat_a_Mem/Mem/data_out_tri_enable_reg[0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: path/genblk1[3].path/genblk1.Vec_y_Mem/Mem/mem_reg[0][31]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  mvm_16_16_16_0     5K_hvratio_1_1        NangateOpenCellLibrary
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  path/genblk1[3].path/Mat_a_Mem/Mem/data_out_tri_enable_reg[0]/CK (DFF_X1)
+                                                          0.00 #     0.00 r
+  path/genblk1[3].path/Mat_a_Mem/Mem/data_out_tri_enable_reg[0]/Q (DFF_X1)
+                                                          0.09       0.09 r
+  path/genblk1[3].path/Mat_a_Mem/Mem/U331/ZN (TINV_X1)
+                                                          0.15       0.23 f
+  path/genblk1[3].path/Mat_a_Mem/Mem/data_out[0] (memory_b16_SIZE16_LOGSIZE4_26)
+                                                          0.00       0.23 f
+  path/genblk1[3].path/Mat_a_Mem/data_out[0] (seqMemory_b16_SIZE16_26)
+                                                          0.00       0.23 f
+  path/genblk1[3].path/path/in0[0] (mac_b16_g0_13)        0.00       0.23 f
+  path/genblk1[3].path/path/mult_21/a[0] (mac_b16_g0_13_DW_mult_tc_1)
+                                                          0.00       0.23 f
+  path/genblk1[3].path/path/mult_21/U1297/ZN (INV_X1)     0.13       0.36 r
+  path/genblk1[3].path/path/mult_21/U1384/ZN (NAND2_X1)
+                                                          0.14       0.50 f
+  path/genblk1[3].path/path/mult_21/U1095/ZN (OAI22_X1)
+                                                          0.09       0.59 r
+  path/genblk1[3].path/path/mult_21/U437/S (FA_X1)        0.13       0.72 f
+  path/genblk1[3].path/path/mult_21/U434/S (FA_X1)        0.14       0.86 r
+  path/genblk1[3].path/path/mult_21/U433/S (FA_X1)        0.11       0.98 f
+  path/genblk1[3].path/path/mult_21/U1003/ZN (NAND2_X1)
+                                                          0.04       1.01 r
+  path/genblk1[3].path/path/mult_21/U935/ZN (INV_X1)      0.02       1.04 f
+  path/genblk1[3].path/path/mult_21/U934/ZN (AOI21_X1)
+                                                          0.06       1.10 r
+  path/genblk1[3].path/path/mult_21/U1433/ZN (OAI21_X1)
+                                                          0.03       1.13 f
+  path/genblk1[3].path/path/mult_21/U1387/ZN (AOI21_X1)
+                                                          0.06       1.20 r
+  path/genblk1[3].path/path/mult_21/U1388/ZN (INV_X1)     0.04       1.23 f
+  path/genblk1[3].path/path/mult_21/U1421/ZN (XNOR2_X1)
+                                                          0.06       1.30 f
+  path/genblk1[3].path/path/mult_21/product[15] (mac_b16_g0_13_DW_mult_tc_1)
+                                                          0.00       1.30 f
+  path/genblk1[3].path/path/add_27/A[15] (mac_b16_g0_13_DW01_add_2)
+                                                          0.00       1.30 f
+  path/genblk1[3].path/path/add_27/U398/ZN (NAND2_X1)     0.04       1.33 r
+  path/genblk1[3].path/path/add_27/U397/ZN (INV_X1)       0.02       1.36 f
+  path/genblk1[3].path/path/add_27/U384/ZN (AOI21_X1)     0.05       1.41 r
+  path/genblk1[3].path/path/add_27/U394/ZN (OAI21_X1)     0.03       1.44 f
+  path/genblk1[3].path/path/add_27/U393/ZN (AOI21_X1)     0.07       1.51 r
+  path/genblk1[3].path/path/add_27/U448/ZN (OAI21_X1)     0.04       1.55 f
+  path/genblk1[3].path/path/add_27/U414/ZN (AOI21_X1)     0.05       1.61 r
+  path/genblk1[3].path/path/add_27/U416/ZN (OAI21_X1)     0.04       1.64 f
+  path/genblk1[3].path/path/add_27/U415/ZN (AOI21_X1)     0.06       1.70 r
+  path/genblk1[3].path/path/add_27/U464/ZN (OAI21_X1)     0.04       1.74 f
+  path/genblk1[3].path/path/add_27/U472/ZN (AOI21_X1)     0.06       1.80 r
+  path/genblk1[3].path/path/add_27/U474/ZN (OAI21_X1)     0.04       1.84 f
+  path/genblk1[3].path/path/add_27/U413/ZN (AOI21_X1)     0.04       1.88 r
+  path/genblk1[3].path/path/add_27/U412/ZN (INV_X1)       0.02       1.91 f
+  path/genblk1[3].path/path/add_27/U3/CO (FA_X1)          0.09       1.99 f
+  path/genblk1[3].path/path/add_27/U475/Z (XOR2_X1)       0.07       2.06 f
+  path/genblk1[3].path/path/add_27/SUM[31] (mac_b16_g0_13_DW01_add_2)
+                                                          0.00       2.06 f
+  path/genblk1[3].path/path/out[31] (mac_b16_g0_13)       0.00       2.06 f
+  path/genblk1[3].path/genblk1.Vec_y_Mem/data_in[31] (seqMemory_b32_SIZE1_13)
+                                                          0.00       2.06 f
+  path/genblk1[3].path/genblk1.Vec_y_Mem/Mem/data_in[31] (memory_b32_SIZE1_LOGSIZE1_13)
+                                                          0.00       2.06 f
+  path/genblk1[3].path/genblk1.Vec_y_Mem/Mem/U104/Z (MUX2_X1)
+                                                          0.07       2.13 f
+  path/genblk1[3].path/genblk1.Vec_y_Mem/Mem/mem_reg[0][31]/D (DFF_X1)
+                                                          0.01       2.14 f
+  data arrival time                                                  2.14
+
+  clock clk (rise edge)                                   2.30       2.30
+  clock network delay (ideal)                             0.00       2.30
+  path/genblk1[3].path/genblk1.Vec_y_Mem/Mem/mem_reg[0][31]/CK (DFF_X1)
+                                                          0.00       2.30 r
+  library setup time                                     -0.04       2.26
+  data required time                                                 2.26
+  --------------------------------------------------------------------------
+  data required time                                                 2.26
+  data arrival time                                                 -2.14
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.12
+
+
+1
+write -f verilog $TOP_MOD_NAME -output gates.v -hierarchy
+Writing verilog file '/home/home5/lfolkerts/ese507/Project2/Project3/src/tmp/gates.v'.
+Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
+Warning: Verilog writer has added 15 nets to module multipath_k16_p16_b16_g0 using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+1
+quit
+
+Thank you...
