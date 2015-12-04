@@ -1,5 +1,5 @@
-module mvm_32_1_8_0(clk, reset, loadMatrix, loadVector, start, done, data_in, data_out);
-	parameter k = 32, p = 1, b = 8, g = 0;
+module mvm_32_32_8_1(clk, reset, loadMatrix, loadVector, start, done, data_in, data_out);
+	parameter k = 32, p = 32, b = 8, g = 1;
 	input clk, reset, loadMatrix, loadVector, start;
 	output logic done;
 	input signed [b - 1:0] data_in;
@@ -10,7 +10,7 @@ module mvm_32_1_8_0(clk, reset, loadMatrix, loadVector, start, done, data_in, da
 endmodule
 
 module mac(clk, reset, clr, in0, in1, out);
-	parameter b = 8, g = 0;
+	parameter b = 8, g = 1;
 	input clk, reset, clr;
 	input signed [b - 1:0] in0, in1;
 	output logic signed [2 * b - 1:0] out;
@@ -128,7 +128,7 @@ module seqMemory(clk, reset, wr, data_in, rd, data_out, of);
 endmodule
 
 module singlepath(clk, reset, data_in, a_wr, x_wr, start, ready, y_rd, data_out, fdbk);
-	parameter n_row = 1, n_col = 32, b = 8, g = 0;
+	parameter n_row = 1, n_col = 32, b = 8, g = 1;
 	input clk, reset, a_wr, x_wr, start, y_rd;
 	input signed [b - 1:0] data_in;
 	output logic ready;
@@ -257,7 +257,7 @@ endmodule
 
 
 module multipath(clk, reset, startMatrix, startVector, start, done, data_in, data_out);
-	parameter k = 32, p = 1, b = 8, g = 0;
+	parameter k = 32, p = 32, b = 8, g = 1;
 	input clk, reset, startMatrix, startVector, start;
 	output logic done;
 	input signed [b - 1:0] data_in;
