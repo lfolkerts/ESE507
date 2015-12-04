@@ -23,7 +23,7 @@ echo "Bits,Matrix Size,Pipelining,Parallelism,Frequency,Slack,Slack,Comb Area,Bu
 
 for b in 8 12 16 20
 do	
-	for k in 8 12 16 20
+	for k in 4 8 12 16 20 32
 	do
 		for g in 0 1
 		do
